@@ -1,4 +1,4 @@
-import Table from "../../../shared/Table";
+import Table from "./Table";
 
 interface Asset {
   id: string;
