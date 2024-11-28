@@ -1,5 +1,5 @@
 import { useState } from "react";
-import downArrow from "../../assets/svgs/downarrgrey.svg";
+import info from "../../assets/info1.png";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
 
 const AwarenessTraining = () => {
@@ -18,9 +18,9 @@ const AwarenessTraining = () => {
   const pieData =
     selectedContent === "Awareness Training"
       ? [
-          { name: "Completed", value: 13 },
-          { name: "Pending", value: 9 },
-          { name: "Not Started", value: 11 },
+          { name: "Completed", value: 7 },
+          { name: "Pending", value: 5 },
+          { name: "Not Started", value: 2 },
         ]
       : [
           { name: "Software", value: 200 },
@@ -35,20 +35,20 @@ const AwarenessTraining = () => {
       <div className="relative">
         <div className="relative w-full rounded-lg flex justify-between items-center gap-4 cursor-pointer">
           <div className="">
-            <h1 className="text-baseBlack leading-[16.8px] font-normal">
+            <h1 className="text-baseBlack leading-[16.8px] font-medium">
               {selectedContent}
             </h1>
-            <div className="">
+            <div className="font-medium">
               {pieData.reduce((acc, current) => acc + current.value, 0)}
             </div>
           </div>
 
-          <img src={downArrow} alt="Dropdown arrow" />
+          <img src={info} alt="Dropdown arrow" />
         </div>
       </div>
       <hr className="w-full bg-black absolute left-0 top-[5rem]" />
       {/* Pie Chart */}
-      <div className="flex flex-col items-center relative mt-7">
+      <div className="flex flex-col items-center relative mt-7 pt-10">
         <PieChart width={219} height={219}>
           <Pie
             data={pieData}
@@ -74,9 +74,9 @@ const AwarenessTraining = () => {
       </div>
 
       {/* Render the details manually below the Pie Chart with color indicators */}
-      <div className="">
+      <div className="pt-10">
         {pieData.map((item, index) => (
-          <div key={index} className="flex items-center gap-2">
+          <div key={index} className="flex items-center gap-2 mt-3">
             {/* Color indicator rectangle */}
             <div
               className="w-[6.5px] aspect-square rounded-full"
@@ -85,7 +85,7 @@ const AwarenessTraining = () => {
               }}
             />
             {/* Label and value */}
-            <div className="w-full flex items-center justify-between">
+            <div className="w-full flex items-center text-sm justify-between">
               <p>{item.name}</p>
               <p>{item.value}</p>
             </div>

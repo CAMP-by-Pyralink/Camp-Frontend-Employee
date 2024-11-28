@@ -7,7 +7,7 @@ const TopSection = ({
   handleCustomizationClick: () => void;
 }) => {
   return (
-    <div className=" flex justify-between relative">
+    <div className=" flex justify-end gap-[40%] relative">
       {/* searchbox */}
       <div>
         <input

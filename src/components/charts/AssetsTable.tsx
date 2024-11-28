@@ -60,7 +60,7 @@ const AssetsTable: React.FC = () => {
   return (
     <div className="bg-white p-8 rounded-lg shadow-[5px_5px_40px_rgba(107,151,255,0.3)] w-full">
       <div className="flex justify-between items-center">
-        <h2 className=" ">Assets</h2>
+        <h2 className=" font-medium">Assets</h2>
         <a
           href="/view-all"
           className=" text-xs text-primary500 hover:underline"
@@ -70,8 +70,8 @@ const AssetsTable: React.FC = () => {
       </div>
       <div className="mt-4 overflow-x-auto">
         <table className="w-full table-auto border-collapse border">
-          <thead>
-            <tr className=" text-left text-[10px] text-[#454545] font-bold">
+          <thead className="">
+            <tr className=" text-left text-xs text-[#344054] font-bold">
               <th className="px-[20px] py-[11px] ">ASSET ID</th>
               <th className="px-[20px] py-[11px] ">ASSET NAME</th>
               <th className="px-[20px] py-[11px] ">CATEGORY</th>
@@ -81,7 +81,7 @@ const AssetsTable: React.FC = () => {
               <th className="px-[40px] py-[11px] ">DETAILS</th>
             </tr>
           </thead>
-          <tbody className="text-[#404040] text-[10px] font-medium">
+          <tbody className="text-[#344054] text-xs font-medium">
             {assetsData.map((asset, index) => (
               <tr key={index} className=" border-t-[0.5px] border-[#E8E8E8]">
                 <td className="px-[20px] py-6 text-[#404040]">{asset.id}</td>

@@ -1,5 +1,5 @@
 // export default SideNav;
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import navIcon from "../assets/svgs/navicon.svg";
 import navCloseIcon from "../assets/svgs/navclose.svg";
 import alertIcon from "../assets/svgs/alertsicon.svg";
@@ -68,6 +68,13 @@ const SideNav = () => {
   console.log(themeColor); // Original color
   // console.log(lighterThemeColor); // Lighter color
 
+  useEffect(() => {
+    const savedMenu = localStorage.getItem("activeMenu");
+    if (savedMenu) {
+      setActiveMenu(savedMenu);
+    }
+  }, []);
+
   return (
     <div
       className={`custom-scrollbar h-screen overflow-y-auto overflow-x-hidden px-4 py-6 bg-primary10 text-white flex flex-col gap-4 transition-width duration-300 ${
@@ -124,32 +131,34 @@ const SideNav = () => {
           <div key={index}>
             <Link to={`${navMenu.path}`}>
               <div
-                className={`flex items-center gap-4 p-2 cursor-pointer py-3 px-4 ${
-                  activeMenu === navMenu.name
-                    ? "bg-opacity-100"
-                    : "bg-opacity-40"
-                }`}
+                className={`flex items-center gap-4 p-2 cursor-pointer py-3 px-4 
+            ${
+              activeMenu === navMenu.name
+                ? "bg-opacity-100 bg-hover text-white"
+                : "bg-transparent text-[#C6DDF7]"
+            } 
+            hover:bg-opacity-80 hover:bg-hover hover:text-white`}
                 style={{
                   background:
                     activeMenu === navMenu.name
                       ? darkerThemeColor
                       : "transparent",
                 }}
+                onClick={() => setActiveMenu(navMenu.name)}
               >
                 <img
                   src={navMenu.img}
                   alt={`${navMenu.name} Icon`}
-                  // width={20}
-                  className=" min-w-[18px]"
+                  className="min-w-[18px]"
                 />
                 {!isCollapsed && (
                   <div className="flex items-center justify-between w-full">
                     <h1
-                      className={` ${
+                      className={`${
                         activeMenu === navMenu.name
-                          ? " text-white text-[15px]"
+                          ? "text-white text-[15px]"
                           : "text-sm text-[#C6DDF7]"
-                      } `}
+                      }`}
                     >
                       {navMenu.name}
                     </h1>
@@ -163,27 +172,35 @@ const SideNav = () => {
 
       {/* Sign out section */}
       <div
-        className={`flex justify-between items-center mt-auto ${
+        className={`flex flex-col mt-auto ${
           isCollapsed ? "flex-col gap-4" : "flex-row"
         }`}
       >
-        <div className="flex items-center gap-2 relative">
-          <img src={profilePic} alt="" className="rounded-full" width={35} />
-          <img
-            src={onlineStatus}
-            alt="Online Status"
-            className="absolute bottom-0 right-[60%]"
-            width={10}
-            height={10}
-          />
+        <div className="flex items-center gap-2 relative px-3">
+          <div className="relative">
+            <div className="w-[40px] aspect-square rounded-full">
+              <img src={profilePic} alt="" className="w-full h-full" />
+            </div>
+            <img
+              src={onlineStatus}
+              alt="Online Status"
+              className="absolute bottom-0 right-0"
+              width={10}
+              height={10}
+            />
+          </div>
+
           {!isCollapsed && (
             <div>
               <h1 className="text-sm font-semibold">Flutter</h1>
-              <h1 className="text-sm">Admin</h1>
+              <h1 className="text-sm">Employee</h1>
             </div>
           )}
         </div>
-        <img src={signoutIcon} alt="Sign Out" width={20} height={20} />
+        <div className="flex items-center gap-4 text-white my-10 px-4">
+          <img src={signoutIcon} alt="Sign Out" width={20} height={20} />
+          <p className="text-sm font-semibold">Log Out</p>
+        </div>
       </div>
     </div>
   );
