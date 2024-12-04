@@ -31,7 +31,7 @@ const UsersLayout = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-full ">
         {/* TopSection */}
-        <div className="bg-white px-8 py-4">
+        <div className="bg-[#fafafa] px-8 py-4">
           <TopSection handleCustomizationClick={handleCustomizationClick} />
         </div>
 

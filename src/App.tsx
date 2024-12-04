@@ -11,6 +11,12 @@ import Overview from "./pages/Users/Overview";
 import PhishingScores from "./pages/Users/PhishingScores";
 import Assets from "./pages/Users/Assets";
 import AssetsDetails from "./pages/Users/AssetsDetails";
+import Training from "./pages/Users/Training";
+import TrainingModule from "./pages/Users/TrainingModule";
+import { TabProvider } from "./utils/TabContext";
+import StartTrainingModal from "./pages/Users/StartTrainingModal";
+import TrainingAssessment from "./pages/Users/TrainingAssessment";
+import ResultsScene from "./pages/Users/ResultScene";
 
 function App() {
   return (
@@ -39,6 +45,28 @@ function App() {
             <Route path="/phishing-scores" element={<PhishingScores />} />
             <Route path="/assets" element={<Assets />} />
             <Route path="/assets/:id" element={<AssetsDetails />} />
+            <Route path="/training" element={<Training />} />
+            <Route
+              path="/training/:module"
+              element={
+                <TabProvider>
+                  <TrainingModule />
+                </TabProvider>
+              }
+            />
+            <Route
+              path="/training/start-assesment/:module/:moduleType"
+              element={<StartTrainingModal />}
+            />
+            <Route
+              path="/training/assesment/:module/:moduleType"
+              element={<TrainingAssessment />}
+            />
+
+            <Route
+              path="/training/result/:module/:moduleType"
+              element={<ResultsScene />}
+            />
           </Route>
         </Routes>
       </Suspense>

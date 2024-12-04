@@ -1,6 +1,7 @@
 import { useState } from "react";
 import info from "../../assets/info1.png";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
+import CardTooltip from "../../utils/CardTooltip";
 
 const AwarenessTraining = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +31,11 @@ const AwarenessTraining = () => {
   // Define custom colors for the pie slices
   const COLORS = ["#7E81FF", "#282EFF", "#D4D5FF"];
 
+  const [showTooltip, setShowTooltip] = useState(false);
+  const header = "Awareness Training:";
+  const text =
+    "This displays the progress of your assigned security awareness trainings, helping you track which trainings are completed and which are still pending.";
+
   return (
     <div className="w-[50%] shadow-[5px_5px_40px_rgba(107,151,255,0.3)] p-6 rounded-lg relative">
       <div className="relative">
@@ -43,12 +49,19 @@ const AwarenessTraining = () => {
             </div>
           </div>
 
-          <img src={info} alt="Dropdown arrow" />
+          <div
+            style={{ position: "relative", display: "inline-block" }}
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            <img src={info} alt="Info arrow" />
+            {showTooltip && <CardTooltip header={header} text={text} />}
+          </div>
         </div>
       </div>
       <hr className="w-full bg-black absolute left-0 top-[5rem]" />
       {/* Pie Chart */}
-      <div className="flex flex-col items-center relative mt-7 pt-10">
+      <div className="flex flex-col items-center relative mt-7">
         <PieChart width={219} height={219}>
           <Pie
             data={pieData}
@@ -74,7 +87,7 @@ const AwarenessTraining = () => {
       </div>
 
       {/* Render the details manually below the Pie Chart with color indicators */}
-      <div className="pt-10">
+      <div className="">
         {pieData.map((item, index) => (
           <div key={index} className="flex items-center gap-2 mt-3">
             {/* Color indicator rectangle */}

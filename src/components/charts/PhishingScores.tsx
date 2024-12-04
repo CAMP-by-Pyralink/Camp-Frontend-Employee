@@ -8,6 +8,9 @@ import {
   YAxis,
 } from "recharts";
 import info from "../../assets/info1.png";
+import CustomTooltip from "../../utils/CustomTooltip";
+import { useState } from "react";
+import CardTooltip from "../../utils/CardTooltip";
 
 const data = [
   {
@@ -67,6 +70,11 @@ const data = [
 ];
 
 const PhishingScores = () => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const header = "Phishing:";
+  const text =
+    "A cyber attack where malicious emails or messages try to trick you into providing sensitive information like passwords or clicking harmful links.";
+
   return (
     <div className="w-full shadow-[5px_5px_40px_rgba(107,151,255,0.3)] p-6 rounded-lg relative">
       <div className="relative">
@@ -74,13 +82,20 @@ const PhishingScores = () => {
           <div className="">
             <h1 className="text-baseBlack  font-medium">Phishing Scores</h1>
           </div>
-          <img src={info} alt="Dropdown arrow" />
+          <div
+            style={{ position: "relative", display: "inline-block" }}
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            <img src={info} alt="Info arrow" />
+            {showTooltip && <CardTooltip header={header} text={text} />}
+          </div>
         </div>
       </div>
       <hr className="w-full bg-black absolute left-0 top-[5rem]" />
       <div
         className="flex flex-col items-center relative mt-14"
-        style={{ width: "100%", height: 400 }}
+        style={{ width: "100%", height: 300 }}
       >
         <ResponsiveContainer>
           <AreaChart
@@ -100,7 +115,7 @@ const PhishingScores = () => {
               domain={[0, 100]}
               ticks={[0, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
             />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <Area
               type="monotone"
               dataKey="uv"
