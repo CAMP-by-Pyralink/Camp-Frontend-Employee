@@ -3,7 +3,7 @@ import profile from "../assets/chi.jpg";
 
 const EditProfilePage = () => {
   return (
-    <div>
+    <div className="font-poppins">
       <div className="flex items-center gap-2">
         <p className="text-[#282EFF]">Dashboard</p>
         <p>/</p>

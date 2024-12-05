@@ -19,6 +19,8 @@ import TrainingAssessment from "./pages/Users/TrainingAssessment";
 import ResultsScene from "./pages/Users/ResultScene";
 import Profile from "./pages/Users/Profile";
 import EditProfile from "./pages/Users/EditProfile";
+import NoficationPage from "./pages/Users/NoficationPage";
+import PhisingReport from "./pages/Users/PhisingReport";
 
 function App() {
   return (
@@ -45,8 +47,10 @@ function App() {
           <Route path="/" element={<UsersLayout />}>
             <Route index element={<Overview />} />
             <Route path="/phishing-scores" element={<PhishingScores />} />
+            <Route path="/phishing-scores/report" element={<PhisingReport />} />
             <Route path="/assets" element={<Assets />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/notification" element={<NoficationPage />} />
             <Route path="/profile/edit" element={<EditProfile />} />
             <Route path="/assets/:id" element={<AssetsDetails />} />
             <Route path="/training" element={<Training />} />

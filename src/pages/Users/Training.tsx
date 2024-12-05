@@ -4,7 +4,7 @@ import TrainingsTab from "../../components/TrainingsTab";
 
 const Training = () => {
   return (
-    <div>
+    <div className="font-poppins">
       <div>
         <div className="text-[#444444] px-4 py-6">
           <p className="font-medium text-[24px]">Training</p>

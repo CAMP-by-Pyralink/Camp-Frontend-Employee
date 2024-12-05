@@ -5,7 +5,7 @@ import DisplayScores from "../../components/DisplayScores";
 
 const ResultsScene = () => {
   return (
-    <div>
+    <div className="font-poppins">
       <div>
         <DisplayScores />
         <TrainingResults />

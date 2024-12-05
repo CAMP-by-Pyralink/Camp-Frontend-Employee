@@ -11,7 +11,7 @@ const TrainingAssessment = () => {
   }>();
 
   return (
-    <div>
+    <div className="font-poppins">
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-2 mt-5 font-poppins">
           <Link to={"/"} className="text-sm font-medium text-[#282EFF]">

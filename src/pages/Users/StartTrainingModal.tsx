@@ -14,7 +14,7 @@ const StartTrainingModal = () => {
     navigate(`/training/assesment/${module}/${moduleType}`);
   };
   return (
-    <div className="w-full">
+    <div className="w-full font-poppins">
       <div className="w-full flex items-center justify-center">
         <div className="max-w-[505px] mt-[5rem] border border-[#E3E3E3] p-[30px] rounded-[10px]">
           <div className="w-[64px] aspect-square rounded-full flex items-center justify-center bg-[#F9F5FF]">

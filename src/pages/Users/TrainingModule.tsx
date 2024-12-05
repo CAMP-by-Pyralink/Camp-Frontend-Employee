@@ -12,7 +12,7 @@ const TrainingModule = () => {
   const { activeTab } = useTabs();
 
   return (
-    <div>
+    <div className="font-poppins">
       <div className="flex items-center gap-4 mt-5 font-poppins">
         <Link to={"/"} className="text-sm font-medium text-[#282EFF]">
           Dashboard

@@ -3,7 +3,7 @@ import ProfilePage from "../../components/ProfilePage";
 
 const Profile = () => {
   return (
-    <div>
+    <div className="font-poppins">
       <ProfilePage />
     </div>
   );

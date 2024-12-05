@@ -13,7 +13,7 @@ const AssetsDetails = () => {
     }
   };
   return (
-    <div>
+    <div className="font-poppins">
       <div className="flex items-center gap-4 font-poppins">
         <Link to={"/"} className="text-sm font-medium text-[#282EFF]">
           Dashboard
