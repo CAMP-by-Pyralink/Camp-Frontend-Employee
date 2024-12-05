@@ -17,6 +17,8 @@ import { TabProvider } from "./utils/TabContext";
 import StartTrainingModal from "./pages/Users/StartTrainingModal";
 import TrainingAssessment from "./pages/Users/TrainingAssessment";
 import ResultsScene from "./pages/Users/ResultScene";
+import Profile from "./pages/Users/Profile";
+import EditProfile from "./pages/Users/EditProfile";
 
 function App() {
   return (
@@ -44,6 +46,8 @@ function App() {
             <Route index element={<Overview />} />
             <Route path="/phishing-scores" element={<PhishingScores />} />
             <Route path="/assets" element={<Assets />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/edit" element={<EditProfile />} />
             <Route path="/assets/:id" element={<AssetsDetails />} />
             <Route path="/training" element={<Training />} />
             <Route

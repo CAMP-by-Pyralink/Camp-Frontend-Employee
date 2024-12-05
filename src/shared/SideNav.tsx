@@ -16,7 +16,7 @@ import onlineStatus from "../assets/svgs/onlinestatus.svg";
 import profilePic from "../assets/profilepic.png";
 import upArrowIcon from "../assets/svgs/downarrgrey.svg";
 import downArrowIcon from "../assets/svgs/downarrgrey.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCustomization } from "../contexts/CustomizationContext";
 
 const SideNav = () => {
@@ -25,6 +25,11 @@ const SideNav = () => {
   const [isUserManagementOpen, setIsUserManagementOpen] = useState(false);
   const [isPhishingOpen, setIsPhishingOpen] = useState(false);
   const { themeColor, logo } = useCustomization();
+  const navigate = useNavigate();
+
+  const profile = () => {
+    navigate("/profile");
+  };
 
   const navMenus = [
     { name: "Dashboard", img: overviewIcon, path: "/" },
@@ -176,7 +181,10 @@ const SideNav = () => {
           isCollapsed ? "flex-col gap-4" : "flex-row"
         }`}
       >
-        <div className="flex items-center gap-2 relative px-3">
+        <button
+          className="flex items-center gap-2 relative px-3 hover:bg-[#282EFF] py-3"
+          onClick={profile}
+        >
           <div className="relative">
             <div className="w-[40px] aspect-square rounded-full">
               <img src={profilePic} alt="" className="w-full h-full" />
@@ -196,7 +204,7 @@ const SideNav = () => {
               <h1 className="text-sm">Employee</h1>
             </div>
           )}
-        </div>
+        </button>
         <div className="flex items-center gap-4 text-white my-10 px-4">
           <img src={signoutIcon} alt="Sign Out" width={20} height={20} />
           <p className="text-sm font-semibold">Log Out</p>
