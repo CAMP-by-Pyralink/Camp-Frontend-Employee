@@ -81,7 +81,7 @@ const AssetsTable: React.FC = () => {
 
   return (
     <div className="relative min-h-[500px]">
-      <div className="overflow-x-scroll w-full top-0 absolute  h-full pb-4">
+      <div className="overflow-x-scroll custom-scrollbar w-full top-0 absolute  h-full pb-4">
         <table className="w-full min-w-[1300px] table-fixed border-collapse border border-gray-200 rounded-lg">
           <thead>
             <tr className="bg-[#F0F2F5] text-left text-[#344054]">
