@@ -39,10 +39,10 @@ const TopSection = ({
   return (
     <div className=" flex justify-end gap-[40%] relative">
       {/* searchbox */}
-      <div>
+      <div className="w-[593px]">
         <input
           type="text"
-          className=" outline-none border-[0.5px] px-4 py-2 placeholder:text-[#898384] border-[#898384] rounded w-[593px]"
+          className=" outline-none border-[0.5px] px-4 py-2 placeholder:text-[#898384] border-[#898384] w-full rounded "
           placeholder="Search"
         />
       </div>

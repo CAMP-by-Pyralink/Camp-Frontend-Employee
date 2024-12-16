@@ -2,7 +2,7 @@ import React from "react";
 
 const TrainingDescription = () => {
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <div className="text-sm text-[#1B1B1B99]">
         <h1 className="text-[24px] text-[#333333] font-semibold">
           Training Description
@@ -19,7 +19,7 @@ const TrainingDescription = () => {
         </p>
 
         <p className="text-[#433E3F] pt-4">The course will cover: </p>
-        <ul className="list-disc pl-7 pb-4">
+        <ul className="list-disc px-7 pb-4">
           <li>
             Types of malware: viruses, trojans, worms, ransomware, and rootkits
           </li>
@@ -43,7 +43,7 @@ const TrainingDescription = () => {
           Ideal for:
         </p>
 
-        <ul className="list-disc pl-7">
+        <ul className="list-disc px-7">
           <li>Malware analysts</li>
           <li>Incident response teams</li>
           <li>Security operations center (SOC) professionals</li>

@@ -30,7 +30,7 @@ const TrainingModules = () => {
   };
 
   return (
-    <div className="w-[60%] px-[28px]">
+    <div className="w-full px-[28px]">
       <div className="w-full ">
         <div>
           <h1 className="text-[24px] text-[#333333] font-semibold">Modules</h1>

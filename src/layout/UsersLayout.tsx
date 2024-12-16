@@ -24,7 +24,7 @@ const UsersLayout = () => {
       style={{ fontFamily: font, fontSize: `${fontSize}px` }}
     >
       {/* SideNav */}
-      <div className=" h-fit bg-gray-100">
+      <div className="relative z-30 h-fit bg-gray-100">
         <SideNav />
       </div>
 

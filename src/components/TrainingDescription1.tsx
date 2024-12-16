@@ -3,7 +3,7 @@ import VideoPlayer from "./VideoPlayers";
 
 const TrainingDescription1 = () => {
   return (
-    <div>
+    <div className="w-full">
       <div className="text-sm text-[#1B1B1B99]">
         <h1 className="text-[24px] text-[#333333] font-semibold">
           Training Description
