@@ -2,7 +2,7 @@ import PhishingTable from "../../components/PhishingTable";
 import filterIcon from "../../assets/svgs/filtericon.svg";
 const PhishingScores = () => {
   return (
-    <div>
+    <div className="font-poppins">
       <div className="text-[#444444] px-4 py-6">
         <p className="font-medium text-[24px]">Phishing Scores</p>
         <p>This tables shows the number of times you </p>

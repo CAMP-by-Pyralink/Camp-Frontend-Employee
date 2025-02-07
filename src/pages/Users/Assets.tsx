@@ -3,7 +3,7 @@ import AssetsTable from "../../components/AssetsTable";
 
 const Assets = () => {
   return (
-    <div>
+    <div className="font-poppins">
       <div className="text-[#444444] px-4 py-6">
         <p className="font-medium text-[24px]">Assets Management</p>
         <p>This tables consists of all assets assigned to you</p>

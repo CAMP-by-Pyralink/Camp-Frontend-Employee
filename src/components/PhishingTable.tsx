@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import pass from "../assets/passed.png";
 import fail from "../assets/failed.png";
 
@@ -13,6 +13,7 @@ interface Score {
 }
 
 const PhishingTable: React.FC = () => {
+  const navigate = useNavigate();
   const users: Score[] = [
     {
       date: "11-08-2024",
@@ -54,6 +55,10 @@ const PhishingTable: React.FC = () => {
     setSelectedUserId((prevUserId) => (prevUserId === userId ? null : userId));
   };
 
+  const phishingRecord = () => {
+    navigate("/phishing-scores/report");
+  };
+
   return (
     <div className="relative">
       <table className="w-full border-collapse border border-gray-200 rounded-lg overflow-hidden">
@@ -77,7 +82,14 @@ const PhishingTable: React.FC = () => {
           {users.map((user, index) => (
             <tr
               key={index}
-              className="text-[#101928] hover:bg-gray-50 relative"
+              className={`text-[#101928] hover:bg-gray-50 relative ${
+                user.browserStatus === "Vulnerable"
+                  ? "cursor-pointer"
+                  : " cursor-default"
+              } `}
+              onClick={
+                user.browserStatus === "Vulnerable" ? phishingRecord : undefined
+              }
             >
               <td className="p-4 border-b border-gray-200">{user.date}</td>
               <td className="p-4 border-b border-gray-200">
@@ -90,8 +102,8 @@ const PhishingTable: React.FC = () => {
                 <div
                   className={`rounded-[13px] py-[2.13px] px-[13px] w-fit ${
                     user.browserStatus === "Vulnerable"
-                      ? " text-[#04326B] bg-[#E3EFFC] "
-                      : " bg-[#FFECE5] text-[#AD3307]"
+                      ? " bg-[#FFECE5] text-[#AD3307]"
+                      : " text-[#04326B] bg-[#E3EFFC]"
                   }`}
                 >
                   {user.browserStatus}

@@ -5,7 +5,7 @@ import PhishingScores from "../../components/charts/PhishingScores";
 
 const Overview = () => {
   return (
-    <div>
+    <div className="font-poppins">
       <div className=" mb-8">
         <h3 className=" text-greyText text-sm">Welcome back, Flutter!</h3>
       </div>

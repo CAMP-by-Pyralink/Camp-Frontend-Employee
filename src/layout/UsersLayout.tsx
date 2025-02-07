@@ -24,14 +24,14 @@ const UsersLayout = () => {
       style={{ fontFamily: font, fontSize: `${fontSize}px` }}
     >
       {/* SideNav */}
-      <div className=" h-fit bg-gray-100">
+      <div className="relative z-30 h-fit bg-gray-100">
         <SideNav />
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-full ">
         {/* TopSection */}
-        <div className="bg-white px-8 py-4">
+        <div className="bg-[#fafafa] px-8 py-4">
           <TopSection handleCustomizationClick={handleCustomizationClick} />
         </div>
 

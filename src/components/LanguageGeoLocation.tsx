@@ -51,7 +51,7 @@ const LanguageGeoLocation = () => {
         </div>
 
         {/* Currency Dropdown */}
-        <div className="text-black mt-4">
+        {/* <div className="text-black mt-4">
           <h1>Currency</h1>
           <div className="relative">
             <div
@@ -81,7 +81,7 @@ const LanguageGeoLocation = () => {
               </div>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
