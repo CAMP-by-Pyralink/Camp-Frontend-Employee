@@ -41,11 +41,12 @@ export default {
         poppins: ["Poppins", "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
         openSans: ["Open Sans", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
     },
     boxShadow: {
       "custom-shadow": "5px 5px 40px rgba(107, 151, 255, 0.3)",
     },
   },
-  plugins: [require("tailwindcss-filters")],
+  plugins: [],
 };
