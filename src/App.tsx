@@ -21,6 +21,8 @@ import Profile from "./pages/Users/Profile";
 import EditProfile from "./pages/Users/EditProfile";
 import NoficationPage from "./pages/Users/NoficationPage";
 import PhisingReport from "./pages/Users/PhisingReport";
+import ProtectedRoutes from "./layout/ProtectedRoutes";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -44,39 +46,45 @@ function App() {
           <Route path="/auth/reset-password" element={<ResetPasswordLink />} />
 
           {/* USERS ROUTES */}
-          <Route path="/" element={<UsersLayout />}>
-            <Route index element={<Overview />} />
-            <Route path="/phishing-scores" element={<PhishingScores />} />
-            <Route path="/phishing-scores/report" element={<PhisingReport />} />
-            <Route path="/assets" element={<Assets />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/notification" element={<NoficationPage />} />
-            <Route path="/profile/edit" element={<EditProfile />} />
-            <Route path="/assets/:id" element={<AssetsDetails />} />
-            <Route path="/training" element={<Training />} />
-            <Route
-              path="/training/:module"
-              element={
-                <TabProvider>
-                  <TrainingModule />
-                </TabProvider>
-              }
-            />
-            <Route
-              path="/training/start-assesment/:module/:moduleType"
-              element={<StartTrainingModal />}
-            />
-            <Route
-              path="/training/assesment/:module/:moduleType"
-              element={<TrainingAssessment />}
-            />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/" element={<UsersLayout />}>
+              <Route index element={<Overview />} />
+              <Route path="/phishing-scores" element={<PhishingScores />} />
+              <Route
+                path="/phishing-scores/report"
+                element={<PhisingReport />}
+              />
+              <Route path="/assets" element={<Assets />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/notification" element={<NoficationPage />} />
+              <Route path="/profile/edit" element={<EditProfile />} />
+              <Route path="/assets/:id" element={<AssetsDetails />} />
+              <Route path="/training" element={<Training />} />
+              <Route
+                path="/training/:module"
+                element={
+                  <TabProvider>
+                    <TrainingModule />
+                  </TabProvider>
+                }
+              />
+              <Route
+                path="/training/start-assesment/:module/:moduleType"
+                element={<StartTrainingModal />}
+              />
+              <Route
+                path="/training/assesment/:module/:moduleType"
+                element={<TrainingAssessment />}
+              />
 
-            <Route
-              path="/training/result/:module/:moduleType"
-              element={<ResultsScene />}
-            />
+              <Route
+                path="/training/result/:module/:moduleType"
+                element={<ResultsScene />}
+              />
+            </Route>
           </Route>
         </Routes>
+        <Toaster />
       </Suspense>
     </>
   );

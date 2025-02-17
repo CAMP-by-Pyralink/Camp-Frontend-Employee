@@ -1,23 +1,34 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import eyes from "../../assets/eye-off.png";
+import { useAuthStore } from "../../store/useAuthStrore";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
-    companyName: "",
-    companyEmail: "",
-    phoneNumber: "",
+    email: "",
     password: "",
   });
+  const navigate = useNavigate();
+  const { login } = useAuthStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    // Handle form submission logic
+    const loginData = {
+      email: formData.email,
+      password: formData.password,
+      authProvider: "manual",
+    };
+    console.log(loginData);
+
+    const response = await login(loginData);
+    console.log(response);
+    if ((response && response.status === 201) || 200) {
+      navigate("/");
+    }
   };
 
   return (
@@ -34,8 +45,8 @@ const SignIn = () => {
             </label>
             <input
               type="text"
-              name="companyName"
-              value={formData.companyName}
+              name="email"
+              value={formData.email}
               onChange={handleChange}
               className="w-full mt-2 p-4 border rounded-lg outline-none"
               required
@@ -49,8 +60,8 @@ const SignIn = () => {
             <div className="mt-2 border rounded-lg px-4 flex items-center justify-between">
               <input
                 type="tel"
-                name="phoneNumber"
-                value={formData.phoneNumber}
+                name="password"
+                value={formData.password}
                 onChange={handleChange}
                 className="w-full outline-none py-4"
                 required
