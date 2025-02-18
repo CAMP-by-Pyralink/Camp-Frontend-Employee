@@ -42,7 +42,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       const response = await api.post("/auth/login", data);
 
       if (response.status === 201) {
-        toast.success("Login successful!");
+        toast.success("Login successful");
         set({ isAuthenticated: true });
       }
 
