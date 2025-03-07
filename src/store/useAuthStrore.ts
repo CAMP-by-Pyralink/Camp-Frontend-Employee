@@ -20,21 +20,29 @@ export interface UpdateProfile {
   lName: string;
   homeAddress: string;
   phoneNumber: string;
-  profileImage: string; // base64 encoded string
+  profileImage: string;
 }
 
 interface AuthStore {
+  authUser: AuthUser | null;
   isSigningIn: boolean;
   isAuthenticated: boolean;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   login: (data: LoginUser) => Promise<any>;
 }
 
+export interface AuthUser {
+  token: string;
+}
+
 export const useAuthStore = create<AuthStore>((set) => ({
   // initial state
+  authUser: null,
   isAuthenticated: false,
   isSigningIn: false,
+  //setters
   setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
+  setAuthUser: (user: AuthUser | null) => set({ authUser: user }),
 
   login: async (data) => {
     set({ isSigningIn: true });
@@ -42,9 +50,15 @@ export const useAuthStore = create<AuthStore>((set) => ({
       const response = await api.post("/auth/login", data);
 
       if (response.status === 201) {
-        toast.success("Login successful");
-        set({ isAuthenticated: true });
+        toast.success(response.data.msg);
+        // set({ isAuthenticated: true });
       }
+      const user: AuthUser = response.data.token;
+      set({ isAuthenticated: true });
+      set({ authUser: user });
+      sessionStorage.setItem("isAuthenticated", "true");
+
+      toast.success(response.data.msg);
 
       console.log(response.data);
       return response;

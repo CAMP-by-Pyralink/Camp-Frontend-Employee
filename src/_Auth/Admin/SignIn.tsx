@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import eyes from "../../assets/eye-off.png";
 import { useAuthStore } from "../../store/useAuthStrore";
+import { Loader2 } from "lucide-react";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -9,7 +10,7 @@ const SignIn = () => {
     password: "",
   });
   const navigate = useNavigate();
-  const { login } = useAuthStore();
+  const { login, isSigningIn } = useAuthStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -74,9 +75,16 @@ const SignIn = () => {
 
           <button
             type="submit"
-            className="w-full bg-primary500 text-white py-3 rounded-lg font-bold"
+            className="w-full bg-primary500 text-white py-3 rounded-lg font-bold flex items-center justify-center"
           >
-            Login
+            {isSigningIn ? (
+              <>
+                <Loader2 className=" size-6 mr-2 animate-spin" />
+                <span className="ml-2">Signing in...</span>
+              </>
+            ) : (
+              "Login"
+            )}
           </button>
 
           <p className="text-center text-[#645D5D] text-sm mt-8">
