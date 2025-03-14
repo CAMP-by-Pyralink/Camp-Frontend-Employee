@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import eyes from "../../assets/eye-off.png";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import { useAuthStore } from "../../store/useAuthStrore";
 import { Loader2 } from "lucide-react";
 
 const SignIn = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -27,7 +30,7 @@ const SignIn = () => {
 
     const response = await login(loginData);
     console.log(response);
-    if ((response && response.status === 201) || 200) {
+    if (response) {
       navigate("/");
     }
   };
@@ -54,21 +57,28 @@ const SignIn = () => {
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label className="block text-[#101928] text-sm font-medium">
               Password
             </label>
             <div className="mt-2 border rounded-lg px-4 flex items-center justify-between">
               <input
-                type="tel"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full outline-none py-4"
                 required
               />
-              <div className="">
-                <img src={eyes} alt="" />
+              <div
+                className="absolute right-3 top-[70%] transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <FaEye className=" text-gray-400" />
+                ) : (
+                  <FaEyeSlash className=" text-gray-400 transition-all" />
+                )}
               </div>
             </div>
           </div>

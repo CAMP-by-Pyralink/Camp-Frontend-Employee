@@ -2,8 +2,16 @@ import { useNavigate } from "react-router-dom";
 import add from "../assets/add.png";
 import pic from "../assets/chi.jpg";
 import pad from "../assets/padlock.png";
+import { useUserStore } from "../store/useUserStore";
+import { useEffect } from "react";
 const ProfilePage = () => {
   const navigate = useNavigate();
+
+  const { getCurrentUser, isLoading } = useUserStore();
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
   const editProfile = () => {
     navigate("/profile/edit");

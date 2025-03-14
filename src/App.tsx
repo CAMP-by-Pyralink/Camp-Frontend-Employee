@@ -23,6 +23,7 @@ import NoficationPage from "./pages/Users/NoficationPage";
 import PhisingReport from "./pages/Users/PhisingReport";
 import ProtectedRoutes from "./layout/ProtectedRoutes";
 import { Toaster } from "react-hot-toast";
+import ResetPassword from "./_Auth/Admin/ResetPassword";
 
 function App() {
   return (
@@ -40,7 +41,9 @@ function App() {
           {/* AUTH ROUTES */}
           <Route element={<AuthLayout />}>
             <Route path="/auth/signin" element={<SignIn />} />
+
             <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Route>
 
           <Route path="/auth/reset-password" element={<ResetPasswordLink />} />

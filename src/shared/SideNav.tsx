@@ -18,6 +18,7 @@ import upArrowIcon from "../assets/svgs/downarrgrey.svg";
 import downArrowIcon from "../assets/svgs/downarrgrey.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useCustomization } from "../contexts/CustomizationContext";
+import { useAuthStore } from "../store/useAuthStrore";
 
 const SideNav = () => {
   const [activeMenu, setActiveMenu] = useState("Overview");
@@ -30,6 +31,8 @@ const SideNav = () => {
   const profile = () => {
     navigate("/profile");
   };
+
+  const { logout } = useAuthStore();
 
   const navMenus = [
     { name: "Dashboard", img: overviewIcon, path: "/" },
@@ -205,7 +208,10 @@ const SideNav = () => {
             </div>
           )}
         </button>
-        <div className="flex items-center gap-4 text-white my-10 px-4">
+        <div
+          className="flex items-center gap-4 text-white my-10 px-4"
+          onClick={() => logout()}
+        >
           <img src={signoutIcon} alt="Sign Out" width={20} height={20} />
           <p className="text-sm font-semibold">Log Out</p>
         </div>
