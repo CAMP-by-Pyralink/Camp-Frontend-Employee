@@ -7,11 +7,29 @@ import { useEffect } from "react";
 const ProfilePage = () => {
   const navigate = useNavigate();
 
-  const { getCurrentUser, isLoading } = useUserStore();
+  const { getCurrentUser, isLoading, currentUser } = useUserStore();
 
   useEffect(() => {
     getCurrentUser();
   }, []);
+
+  console.log(currentUser);
+
+  // Get user's initials from first and last name
+  const getUserInitials = () => {
+    let initials = "";
+
+    if (currentUser?.fName) {
+      initials += currentUser.fName.charAt(0).toUpperCase();
+    }
+
+    if (currentUser?.lName) {
+      initials += currentUser.lName.charAt(0).toUpperCase();
+    }
+
+    // If we couldn't get any initials, return "U" as fallback
+    return initials || "";
+  };
 
   const editProfile = () => {
     navigate("/profile/edit");
@@ -35,18 +53,30 @@ const ProfilePage = () => {
       <div className="bg-[#EBECFF] p-[40px] mt-10">
         <div className="bg-white p-[20px] rounded-[10px] flex items-center gap-10">
           {/* flex 1 */}
-          <div className="flex items-center gap-4 w-[40%]">
+          <div className="flex items-center gap-4 w-[45%]">
             {/* image */}
             <div>
-              <div className="w-[96px] border-[3px] border-[#FFFFFF] aspect-square rounded-full overflow-hidden">
-                <img className="w-full h-full object-cover" src={pic} alt="" />
+              <div className="w-[96px] border-[3px] border-[#FFFFFF] bg-[#D4CFCF] aspect-square rounded-full flex items-center justify-center overflow-hidden">
+                {currentUser?.profileImage ? (
+                  <img
+                    src={currentUser.profileImage}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-gray-800 font-semibold text-4xl">
+                    {getUserInitials()}
+                  </span>
+                )}
               </div>
             </div>
 
             {/* name */}
             <div>
-              <p className="font-medium text-[20px]">Sarah Brown</p>
-              <p>Accountant</p>
+              <p className="font-medium text-[20px]">
+                {currentUser?.lName} {currentUser?.fName}
+              </p>
+              <p>{currentUser?.department}</p>
               <p>PY 12134</p>
             </div>
           </div>
@@ -60,8 +90,8 @@ const ProfilePage = () => {
             </div>
             <div className="font-medium">
               <p>07045637821</p>
-              <p className="py-3">Sarahbrown@gmail.com</p>
-              <p>House 6, Truope street, Ajah</p>
+              <p className="py-3">{currentUser?.email}</p>
+              <p>{currentUser?.homeAddress}</p>
             </div>
           </div>
         </div>
@@ -83,7 +113,7 @@ const ProfilePage = () => {
             </div>
             <div className="font-medium text-right">
               <p>Full time</p>
-              <p className="py-3">Accountant</p>
+              <p className="py-3">{currentUser?.department}</p>
               <p>User</p>
             </div>
           </div>

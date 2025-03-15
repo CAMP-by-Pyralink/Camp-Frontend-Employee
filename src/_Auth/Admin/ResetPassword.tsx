@@ -36,7 +36,7 @@ const ResetPassword = () => {
       isLongEnough: password.length >= 12,
       hasUpperCase: /[A-Z]/.test(password),
       hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
-      hasNumber: /[0-9]/.test(password), // Properly checking if there's at least one number
+      hasNumber: /[0-9]/.test(password),
     };
   };
 
@@ -83,7 +83,7 @@ const ResetPassword = () => {
                 name="newPassword"
                 value={formData.newPassword}
                 onChange={handleChange}
-                className="w-full mt-2 p-3 border-[1.5px] border-[#E2E8F0] text-[#1E293B] placeholder:text-[#94A3B8] rounded-lg"
+                className="w-full mt-2 p-3 border-[1.5px] border-[#E2E8F0] text-[#1E293B] placeholder:text-[#94A3B8] rounded-lg outline-none focus:ring-2 focus:ring-primary500/20 focus:border-primary500"
                 required
                 placeholder="********"
               />
@@ -107,7 +107,7 @@ const ResetPassword = () => {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full mt-2 py-3 px-4 border-[1.5px] border-[#E2E8F0] text-[#1E293B] placeholder:text-[#94A3B8] rounded-lg"
+                className="w-full mt-2 py-3 px-4 border-[1.5px] border-[#E2E8F0] text-[#1E293B] placeholder:text-[#94A3B8] rounded-lg outline-none focus:ring-2 focus:ring-primary500/20 focus:border-primary500"
                 required
                 placeholder="********"
               />
@@ -218,7 +218,6 @@ const ResetPassword = () => {
               }`}
             >
               {isLoading ? "Resetting..." : "Reset Password"}
-              Reset
             </button>
           </form>
         </div>

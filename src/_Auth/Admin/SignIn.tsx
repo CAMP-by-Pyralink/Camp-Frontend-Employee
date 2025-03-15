@@ -84,8 +84,10 @@ const SignIn = () => {
           </div>
 
           <button
+            disabled={!!isSigningIn}
             type="submit"
-            className="w-full bg-primary500 text-white py-3 rounded-lg font-bold flex items-center justify-center"
+            className={`w-full bg-primary500 text-white py-3 rounded-lg font-bold flex items-center justify-center
+              ${isSigningIn ? "opacity-50 cursor-not-allowed" : ""}`}
           >
             {isSigningIn ? (
               <>

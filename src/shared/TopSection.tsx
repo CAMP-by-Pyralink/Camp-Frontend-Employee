@@ -3,6 +3,7 @@ import profilePic from "../assets/profilepic.png";
 import settings from "../assets/svgs/settings.svg";
 import notify from "../assets/notify.png";
 import Notification from "../utils/Notification";
+import { useUserStore } from "../store/useUserStore";
 // import CustomizationSetting from "./CustomizationSetting";
 const TopSection = ({
   handleCustomizationClick,
@@ -36,6 +37,28 @@ const TopSection = ({
     };
   }, []);
 
+  const { currentUser, getCurrentUser } = useUserStore();
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  // Get user's initials from first and last name
+  const getUserInitials = () => {
+    let initials = "";
+
+    if (currentUser?.fName) {
+      initials += currentUser.fName.charAt(0).toUpperCase();
+    }
+
+    if (currentUser?.lName) {
+      initials += currentUser.lName.charAt(0).toUpperCase();
+    }
+
+    // If we couldn't get any initials, return "U" as fallback
+    return initials || "";
+  };
+
   return (
     <div className=" flex justify-end gap-[40%] relative">
       {/* searchbox */}
@@ -54,7 +77,19 @@ const TopSection = ({
           className="relative"
         >
           <div className="cursor-pointer">
-            <img src={notify} alt="notification icon" />
+            <div className="w-[40px] border-[3px] border-[#FFFFFF] bg-[#D4CFCF] aspect-square rounded-full flex items-center justify-center overflow-hidden">
+              {currentUser?.profileImage ? (
+                <img
+                  src={currentUser.profileImage}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-gray-800 font-semibold text-lg">
+                  {getUserInitials()}
+                </span>
+              )}
+            </div>
           </div>
 
           {isNotificationVisible && (
@@ -63,7 +98,6 @@ const TopSection = ({
             </div>
           )}
         </div>
-        <img src={profilePic} alt="" className="  w-[36px] h-[36px]" />
         <img
           src={settings}
           alt=""

@@ -1,4 +1,3 @@
-// export default SideNav;
 import { useEffect, useState } from "react";
 import navIcon from "../assets/svgs/navicon.svg";
 import navCloseIcon from "../assets/svgs/navclose.svg";
@@ -19,6 +18,7 @@ import downArrowIcon from "../assets/svgs/downarrgrey.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useCustomization } from "../contexts/CustomizationContext";
 import { useAuthStore } from "../store/useAuthStrore";
+import { useUserStore } from "../store/useUserStore";
 
 const SideNav = () => {
   const [activeMenu, setActiveMenu] = useState("Overview");
@@ -27,6 +27,11 @@ const SideNav = () => {
   const [isPhishingOpen, setIsPhishingOpen] = useState(false);
   const { themeColor, logo } = useCustomization();
   const navigate = useNavigate();
+  const { currentUser, getCurrentUser } = useUserStore();
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
   const profile = () => {
     navigate("/profile");
@@ -83,6 +88,21 @@ const SideNav = () => {
     }
   }, []);
 
+  // Get user's initials from first and last name
+  const getUserInitials = () => {
+    let initials = "";
+
+    if (currentUser?.fName) {
+      initials += currentUser.fName.charAt(0).toUpperCase();
+    }
+
+    if (currentUser?.lName) {
+      initials += currentUser.lName.charAt(0).toUpperCase();
+    }
+
+    // If we couldn't get any initials, return "U" as fallback
+    return initials || "";
+  };
   return (
     <div
       className={`custom-scrollbar h-screen overflow-y-auto overflow-x-hidden px-4 py-6 bg-primary10 text-white flex flex-col gap-4 transition-width duration-300 ${
@@ -189,8 +209,18 @@ const SideNav = () => {
           onClick={profile}
         >
           <div className="relative">
-            <div className="w-[40px] aspect-square rounded-full">
-              <img src={profilePic} alt="" className="w-full h-full" />
+            <div className="w-[40px]  bg-[#D4CFCF] aspect-square rounded-full flex items-center justify-center overflow-hidden">
+              {currentUser?.profileImage ? (
+                <img
+                  src={currentUser.profileImage}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-gray-800 font-semibold text-lg">
+                  {getUserInitials()}
+                </span>
+              )}
             </div>
             <img
               src={onlineStatus}
@@ -202,8 +232,8 @@ const SideNav = () => {
           </div>
 
           {!isCollapsed && (
-            <div>
-              <h1 className="text-sm font-semibold">Flutter</h1>
+            <div className=" text-left">
+              <h1 className="text-sm font-semibold">{currentUser?.fName}</h1>
               <h1 className="text-sm">Employee</h1>
             </div>
           )}
@@ -213,7 +243,7 @@ const SideNav = () => {
           onClick={() => logout()}
         >
           <img src={signoutIcon} alt="Sign Out" width={20} height={20} />
-          <p className="text-sm font-semibold">Log Out</p>
+          {!isCollapsed && <p className="text-sm font-semibold">Log Out</p>}
         </div>
       </div>
     </div>

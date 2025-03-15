@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axios, { AxiosResponse } from "axios";
 import toast from "react-hot-toast";
-import { useAuthStore } from "./useAuthStrore";
 import Cookies from "js-cookie";
 
 const api = axios.create({
@@ -14,16 +13,7 @@ const api = axios.create({
 // Add a request interceptor to attach the bearer token
 api.interceptors.request.use(
   (config) => {
-    // const { authUser } = useAuthStore.getState();
-    // console.log(authToken, "dfg");
-
-    // if (authUser) {
-    //   console.log(authUser, "dfg");
-    //   config.headers.Authorization = `Bearer ${authUser}`;
-    // }
-
     const token = Cookies.get("token");
-
     // If token exists, add it to the headers
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -36,10 +26,10 @@ api.interceptors.request.use(
 );
 
 // --- Data Payload Interfaces ---
-
 export interface getAdminsData {
   fname: string;
 }
+
 export interface GetCurrentUserData {
   adminId: string;
   comapanyName: string;
@@ -50,17 +40,24 @@ export interface GetCurrentUserData {
   pNumber: string;
   profileImage: string;
   role: string;
-  address: string;
+  homeAddress: string;
   phoneNumber: string;
 }
 
-// --- Admin store interface
+export interface updateProfile {
+  fName: string;
+  lName: string;
+  homeAddress: string;
+  phoneNumber: string;
+  profileImage: string;
+}
 
+// --- Admin store interface
 interface AdminStore {
   isLoading: boolean;
   currentUser: GetCurrentUserData | null;
-
   getCurrentUser: () => Promise<any>;
+  updateProfile: (data: updateProfile) => Promise<any>;
 }
 
 export const useUserStore = create<AdminStore>((set) => ({
@@ -71,10 +68,62 @@ export const useUserStore = create<AdminStore>((set) => ({
     set({ isLoading: true });
     try {
       const response: AxiosResponse = await api.get("/user/currentUser");
-      set({ currentUser: response.data.admin });
-      console.log("getUser", response.data.admin);
-    } catch (error) {
+      set({ currentUser: response.data.user });
+      console.log("getUser", response.data.user);
+      return response.data.user;
+    } catch (error: any) {
       console.log("getUser", error);
+      return null;
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  updateProfile: async (data) => {
+    set({ isLoading: true });
+    try {
+      // Create a payload object with the form data
+      const payload = {
+        fName: data.fName,
+        lName: data.lName,
+        homeAddress: data.homeAddress,
+        phoneNumber: data.phoneNumber,
+        // Only include profilePicture if it's a base64 string (not an URL from the server)
+        ...(data.profileImage && data.profileImage.startsWith("data:image")
+          ? { profileImage: data.profileImage }
+          : {}),
+      };
+
+      // Send the JSON payload with the base64 image
+      const response: AxiosResponse = await api.patch(
+        "/user/updateProfile",
+        payload
+      );
+
+      if (response.status === 200) {
+        toast.success(response.data.msg);
+
+        // Update the current user in the store with new data
+        set((state) => ({
+          currentUser: {
+            ...state.currentUser!,
+            fName: data.fName,
+            lName: data.lName,
+            homeAddress: data.homeAddress,
+            phoneNumber: data.phoneNumber,
+            ...(data.profileImage && data.profileImage.startsWith("data:image")
+              ? { profileImage: data.profileImage }
+              : {}),
+          },
+        }));
+
+        return true;
+      }
+      return false;
+    } catch (error: any) {
+      console.error("Update profile error:", error);
+      toast.error(error.response?.data?.msg || "Failed to update profile");
+      return false;
     } finally {
       set({ isLoading: false });
     }

@@ -38,7 +38,7 @@ export interface UpdateProfile {
   lName: string;
   homeAddress: string;
   phoneNumber: string;
-  profileImage: string;
+  profilePicture: string;
 }
 
 interface AuthStore {
@@ -162,6 +162,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       set({ isLoading: false });
     }
   },
+
   logout: async () => {
     set({ authUser: null, isAuthenticated: false });
     Cookies.remove("token");

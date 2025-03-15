@@ -121,6 +121,7 @@ const ResetPasswordLink = () => {
           {/* Buttons */}
           <div className="flex gap-4 justify-center">
             <button
+              onClick={() => navigate("/auth/signin")}
               type="button"
               className="py-2 px-4 rounded-lg border border-[#D0D5DD] font-medium text-[#344054] w-[174px]"
             >
@@ -129,7 +130,8 @@ const ResetPasswordLink = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="bg-primary500 text-white py-2 px-4 rounded-lg font-medium w-[174px] flex items-center justify-center"
+              className={`bg-primary500 text-white py-2 px-4 rounded-lg font-medium w-[174px] flex items-center justify-center
+                ${isLoading ? "opacity-70 cursor-not-allowed" : ""}`}
             >
               {isLoading ? (
                 <>

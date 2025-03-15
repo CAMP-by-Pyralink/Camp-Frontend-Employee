@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import "./App.css";
 import { ClipLoader } from "react-spinners";
 import { Route, Routes } from "react-router-dom";
@@ -24,8 +24,32 @@ import PhisingReport from "./pages/Users/PhisingReport";
 import ProtectedRoutes from "./layout/ProtectedRoutes";
 import { Toaster } from "react-hot-toast";
 import ResetPassword from "./_Auth/Admin/ResetPassword";
+import { useAuthStore } from "./store/useAuthStrore";
+import Cookies from "js-cookie";
 
 function App() {
+  const { setIsAuthenticated, isAuthenticated } = useAuthStore();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+    console.log(isAuthenticated, "app 42");
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <ClipLoader size={50} color="#123abc" />
+      </div>
+    );
+  }
   return (
     <>
       <Suspense

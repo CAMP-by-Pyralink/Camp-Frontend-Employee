@@ -48,7 +48,7 @@ const ForgotPassword = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full mt-2 p-3 border-[1.5px] border-[#E2E8F0] text-[#1B1818] placeholder:text-[#94A3B8] rounded-lg"
+                className="w-full mt-2 p-3 border-[1.5px] border-[#E2E8F0] text-[#1B1818] placeholder:text-[#94A3B8] rounded-lg outline-none focus:ring-2 focus:ring-primary500/20 focus:border-primary500"
                 required
                 placeholder=""
               />
