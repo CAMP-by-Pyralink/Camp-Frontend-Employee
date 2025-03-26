@@ -88,7 +88,7 @@ function App() {
               <Route path="/assets/:id" element={<AssetsDetails />} />
               <Route path="/training" element={<Training />} />
               <Route
-                path="/training/:module"
+                path="/training/:trainingId"
                 element={
                   <TabProvider>
                     <TrainingModule />

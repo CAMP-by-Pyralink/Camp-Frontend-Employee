@@ -8,8 +8,13 @@ import book from "../assets/book.png";
 import assess from "../assets/assess.png";
 import { useTabs } from "../utils/TabContext";
 import { useNavigate } from "react-router-dom";
+import { useTrainingStore } from "../store/useTraining";
 
-const TrainingModules = () => {
+interface TrainingModulesProps {
+  currentTraining: any; // Replace 'any' with the appropriate type for currentTraining
+}
+
+const TrainingModules = ({ currentTraining }: TrainingModulesProps) => {
   const { switchTab } = useTabs();
   const percentage = 66;
   const navigate = useNavigate();

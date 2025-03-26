@@ -3,6 +3,8 @@ import arrow from "../assets/svgs/arrow-right.svg";
 import badge from "../assets/award.png";
 import retake from "../assets/refresh-2.png";
 import { useNavigate } from "react-router-dom";
+import { useTrainingStore } from "../store/useTraining";
+import { useEffect } from "react";
 
 interface BadgeTabProps {
   handleTab: (tab: string) => void;
@@ -10,54 +12,60 @@ interface BadgeTabProps {
 
 const TrainingTab1 = ({ handleTab }: BadgeTabProps) => {
   const navigate = useNavigate();
+  const { getAllTrainings, trainings, isLoading, getSingleTraining } =
+    useTrainingStore();
 
-  const trainings = [
-    {
-      id: 1,
-      title: "Cybersecurity for Beginners",
-      description: "A score of at least 50% is needed to pass this training",
-      score: 0,
-      status: "Not Started",
-      progress: 0,
-      buttonLabel: "Start Training",
-      module: "cybersecurity",
-    },
-    {
-      id: 2,
-      title: "Risk Assessment Training",
-      description: "A score of at least 50% is needed to pass this training",
-      score: 100,
-      status: "Completed",
-      progress: 100,
-      buttonLabel: "View Badge",
-      module: "risk-assessment",
-    },
-    {
-      id: 3,
-      title: "Security Awareness",
-      description: "A score of at least 50% is needed to pass this training",
-      score: 45,
-      status: "Pending",
-      progress: 45,
-      buttonLabel: "Resume Training",
-      module: "security-awareness",
-    },
-    {
-      id: 4,
-      title: "Phishing Training",
-      description: "A score of at least 50% is needed to pass this training",
-      score: 20,
-      status: "Completed",
-      progress: 100,
-      buttonLabel: "Retake Training",
-      module: "phishing",
-    },
-  ];
+  // const trainings = [
+  //   {
+  //     id: 1,
+  //     title: "Cybersecurity for Beginners",
+  //     description: "A score of at least 50% is needed to pass this training",
+  //     score: 0,
+  //     status: "Not Started",
+  //     progress: 0,
+  //     buttonLabel: "Start Training",
+  //     module: "cybersecurity",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Risk Assessment Training",
+  //     description: "A score of at least 50% is needed to pass this training",
+  //     score: 100,
+  //     status: "Completed",
+  //     progress: 100,
+  //     buttonLabel: "View Badge",
+  //     module: "risk-assessment",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Security Awareness",
+  //     description: "A score of at least 50% is needed to pass this training",
+  //     score: 45,
+  //     status: "Pending",
+  //     progress: 45,
+  //     buttonLabel: "Resume Training",
+  //     module: "security-awareness",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Phishing Training",
+  //     description: "A score of at least 50% is needed to pass this training",
+  //     score: 20,
+  //     status: "Completed",
+  //     progress: 100,
+  //     buttonLabel: "Retake Training",
+  //     module: "phishing",
+  //   },
+  // ];
 
+  useEffect(() => {
+    getAllTrainings(1);
+  }, []);
   const handleButtonClick = (training: (typeof trainings)[0]) => {
     switch (training.buttonLabel) {
       case "Start Training":
-        navigate(`/training/${training.module}`);
+        navigate(`/training/${training._id}`);
+        console.log("clicked", training._id);
         break;
       case "View Badge":
         handleTab("2");
@@ -72,13 +80,21 @@ const TrainingTab1 = ({ handleTab }: BadgeTabProps) => {
         break;
     }
   };
+  const handleStartClick = (training: any) => {
+    // Call the getSingleTraining method from the store
+    getSingleTraining(training._id);
+    //
+    navigate(`/training/${training._id}`);
+    console.log(training);
+  };
+  console.log(trainings);
 
   return (
     <div className="mt-4">
       <div className="flex flex-col gap-4">
         {trainings.map((training) => (
           <div
-            key={training.id}
+            key={training._id}
             className="bg-white py-4 px-[20px] rounded-md flex items-center gap-20"
           >
             {/* Image and Title */}
@@ -86,7 +102,7 @@ const TrainingTab1 = ({ handleTab }: BadgeTabProps) => {
               <div>
                 <div className="w-[190px] aspect-square overflow-hidden">
                   <img
-                    src={img1}
+                    src={training.bannerImage}
                     className="w-full h-full object-cover"
                     alt=""
                   />
@@ -142,8 +158,8 @@ const TrainingTab1 = ({ handleTab }: BadgeTabProps) => {
                   {training.score <= 50 ? "Failed" : "Passed"}
                 </p>
               </div>
-              <div>
-                <button
+              <div className=" w-full">
+                {/* <button
                   onClick={() => handleButtonClick(training)}
                   className={` ${
                     training.status === "Completed" && training.score <= 50
@@ -165,6 +181,13 @@ const TrainingTab1 = ({ handleTab }: BadgeTabProps) => {
                     }
                     alt=""
                   />
+                </button> */}
+                <button
+                  className="bg-[#282EFF] w-full text-white  items-center gap-4 text-xs font-medium px-[12px] py-[10px] rounded"
+                  onClick={() => handleStartClick(training)}
+                >
+                  Start Training
+                  {/* <img src={arrow} alt="" width={} /> */}
                 </button>
               </div>
             </div>

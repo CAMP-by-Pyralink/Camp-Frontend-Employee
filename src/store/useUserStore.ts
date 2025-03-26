@@ -121,7 +121,7 @@ export const useUserStore = create<AdminStore>((set) => ({
       }
       return false;
     } catch (error: any) {
-      console.error("Update profile error:", error);
+      console.log("Update profile error:", error);
       toast.error(error.response?.data?.msg || "Failed to update profile");
       return false;
     } finally {

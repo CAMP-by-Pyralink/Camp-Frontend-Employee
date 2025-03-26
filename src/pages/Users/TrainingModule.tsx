@@ -7,9 +7,11 @@ import { useTabs } from "../../utils/TabContext";
 import VideoPlayer from "../../components/VideoPlayers";
 import TrainingDescription1 from "../../components/TrainingDescription1";
 import NotifyModal from "../../components/NotifyModal";
+import { useTrainingStore } from "../../store/useTraining";
 
 const TrainingModule = () => {
   const { activeTab } = useTabs();
+  const { currentTraining, isLoading } = useTrainingStore();
 
   return (
     <div className="font-poppins relative">
@@ -35,15 +37,21 @@ const TrainingModule = () => {
           <div className="w-full flex items-center justify-center gap-5 bg-[#EBECFF] mt-6 rounded-[24px] px-[50px] py-[47px]">
             <div className="text-[#333333]">
               <h1 className="font-semibold text-[56px] leading-[56px] max-w-[488px]">
-                Cybersecurity for beginners
+                {currentTraining.title}
               </h1>
-              <p className="font-medium mt-3">8 modules, 26 lessons</p>
-              <p className="text-sm">8 hours</p>
+              <p className="font-medium mt-3">
+                {currentTraining.modules.length} modules
+              </p>
+              {/* <p className="text-sm">8 hours</p> */}
             </div>
 
             <div>
               <div className="w-[428px] h-[244px] overflow-hidden rounded-[30px]">
-                <img className="w-full h-full object-cover" src={img1} alt="" />
+                <img
+                  className="w-full h-full object-cover"
+                  src={currentTraining.bannerImage}
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -53,11 +61,13 @@ const TrainingModule = () => {
         <div className="relative w-full">
           <div className="w-full flex gap-10 mt-10">
             <div className="w-full">
-              {activeTab === 0 && <TrainingDescription />}
+              {activeTab === 0 && (
+                <TrainingDescription currentTraining={currentTraining} />
+              )}
               {activeTab === 1 && <TrainingDescription1 />}
             </div>
             <div className="w-[70%]">
-              <TrainingModules />
+              <TrainingModules currentTraining={currentTraining} />
             </div>{" "}
           </div>
         </div>
