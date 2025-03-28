@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useUserStore, updateProfile } from "../store/useUserStore";
+import { Link } from "react-router-dom";
 
 const EditProfilePage = () => {
   const {
@@ -91,7 +92,9 @@ const EditProfilePage = () => {
   return (
     <div className="font-poppins">
       <div className="flex items-center gap-2">
-        <p className="text-[#282EFF]">Dashboard</p>
+        <Link to="/">
+          <p className="text-[#282EFF] cursor-pointer">Dashboard</p>
+        </Link>{" "}
         <p>/</p>
         <p>Edit Profile</p>
       </div>

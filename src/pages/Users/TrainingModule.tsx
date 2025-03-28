@@ -37,7 +37,7 @@ const TrainingModule = () => {
           <div className="w-full flex items-center justify-center gap-5 bg-[#EBECFF] mt-6 rounded-[24px] px-[50px] py-[47px]">
             <div className="text-[#333333]">
               <h1 className="font-semibold text-[56px] leading-[56px] max-w-[488px]">
-                {currentTraining.title}
+                {currentTraining?.title}
               </h1>
               <p className="font-medium mt-3">
                 {currentTraining.modules.length} modules

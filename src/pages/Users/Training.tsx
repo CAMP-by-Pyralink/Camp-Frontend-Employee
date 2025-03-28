@@ -8,7 +8,7 @@ const Training = () => {
       <div>
         <div className="text-[#444444] px-4 py-6">
           <p className="font-medium text-[24px]">Training</p>
-          <p>Here's a ;ist of trainings assigned to you</p>
+          <p>Here's a List of trainings assigned to you</p>
         </div>
         <div className="bg-white rounded-md w-full pb-10 px-[20px]">
           <div className="flex items-center justify-between">

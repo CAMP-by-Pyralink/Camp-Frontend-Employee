@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import profilePic from "../assets/profilepic.png";
 import settings from "../assets/svgs/settings.svg";
-import notify from "../assets/notify.png";
+import notify from "../assets/svgs/bell-icon.svg";
 import Notification from "../utils/Notification";
 import { useUserStore } from "../store/useUserStore";
 // import CustomizationSetting from "./CustomizationSetting";
@@ -69,8 +69,14 @@ const TopSection = ({
           placeholder="Search"
         />
       </div>
+      {/* search */}
+
       {/* profile */}
       <div className=" flex gap-4 items-center">
+        {/*  */}
+        <div>
+          <img src={notify} alt="" width={50} />
+        </div>
         <div
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -98,6 +104,8 @@ const TopSection = ({
             </div>
           )}
         </div>
+
+        {/*  */}
         <img
           src={settings}
           alt=""
