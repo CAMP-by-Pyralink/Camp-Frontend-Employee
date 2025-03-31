@@ -13,6 +13,8 @@ const TrainingModule = () => {
   const { activeTab } = useTabs();
   const { currentTraining, isLoading } = useTrainingStore();
 
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <div className="font-poppins relative">
       <div className="absolute">

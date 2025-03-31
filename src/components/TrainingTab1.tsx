@@ -117,36 +117,29 @@ const TrainingTab1 = ({ handleTab }: BadgeTabProps) => {
                 </p>
                 <div className="w-full rounded-[20px] bg-[#F0F2F5] h-[12px]">
                   <div
-                    style={{ width: `${training.progress}%` }}
+                    style={{ width: `${training.overallCompletion}%` }}
                     className={`rounded-[20px] ${
-                      training.progress >= 50 ? "bg-[#15B097]" : "bg-[#F56630]"
+                      training.overallCompletion >= 50
+                        ? "bg-[#15B097]"
+                        : "bg-[#F56630]"
                     } h-[12px]`}
                   ></div>
                 </div>
                 <div className="w-full flex items-center justify-between">
                   <p className="text-sm text-[#475367]">Progress</p>
-                  <p className="text-sm text-[#475367]">{training.progress}%</p>
+                  <p className="text-sm text-[#475367]">
+                    {training.overallCompletion}%
+                  </p>
                 </div>
               </div>
             </div>
             {/* Score and Button */}
             <div className="flex w-[40%] items-center justify-between gap-10">
-              <div className="text-center">
-                <p className="text-sm text-[#333333]">Your score:</p>
-                <p
-                  className={`text-[24px] font-medium ${
-                    training.status === "Pending"
-                      ? "text-black"
-                      : training.status === "Not Started"
-                      ? "text-black"
-                      : training.score <= 50
-                      ? "text-[#B30100]"
-                      : "text-[#0B7B69]"
-                  }`}
-                >
-                  {training.status === "Pending" ? "N/A" : `${training.score}%`}
-                </p>
-
+              <div className="text-center w-full">
+                <p className="text-sm text-[#333333] mb-2">Your score:</p>
+                <span className=" text-textColor text-xl font-medium">
+                  {training.totalScore}%
+                </span>
                 <p
                   className={`${
                     training.status === "Pending" ||
@@ -155,7 +148,7 @@ const TrainingTab1 = ({ handleTab }: BadgeTabProps) => {
                       : "block"
                   }`}
                 >
-                  {training.score <= 50 ? "Failed" : "Passed"}
+                  {training.totalScore === 100 && "Passed"}
                 </p>
               </div>
               <div className=" w-full">
@@ -183,7 +176,7 @@ const TrainingTab1 = ({ handleTab }: BadgeTabProps) => {
                   />
                 </button> */}
                 <button
-                  className="bg-[#282EFF] w-full text-white  items-center gap-4 text-xs font-medium px-[12px] py-[10px] rounded"
+                  className="bg-[#282EFF] w-fit text-white  items-center gap-4 text-xs font-medium px-[12px] py-[10px] rounded"
                   onClick={() => handleStartClick(training)}
                 >
                   Start Training

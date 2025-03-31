@@ -75,7 +75,7 @@ const TopSection = ({
       <div className=" flex gap-4 items-center">
         {/*  */}
         <div>
-          <img src={notify} alt="" width={50} />
+          <img src={notify} alt="" className=" size-[28px]" />
         </div>
         <div
           onMouseEnter={handleMouseEnter}
