@@ -1,54 +1,75 @@
-import React, { useRef, useState } from "react";
-import play from "../assets/play.png";
-import pause from "../assets/pause.png";
+import React from "react";
+import { useTabs } from "../utils/TabContext";
 
-const VideoPlayer = () => {
-  const videoRef = useRef<HTMLVideoElement | null>(null); // Specify the type for the ref
-  const [isPlaying, setIsPlaying] = useState(false);
+const VideoPlayer: React.FC = () => {
+  const { currentLesson } = useTabs();
 
-  const togglePlayPause = () => {
-    if (videoRef.current) {
-      // Check if videoRef.current is not null
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
+  if (
+    !currentLesson ||
+    (currentLesson.lessonType.toLowerCase() !== "video" &&
+      currentLesson.lessonType.toLowerCase() !== "link")
+  ) {
+    return <div>No video content available</div>;
+  }
+
+  // Extract video ID if it's a YouTube link
+  const getYoutubeVideoId = (url: string) => {
+    const regExp =
+      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
   };
+
+  // Check if the URL is a direct video file (mp4, webm, ogg, etc.)
+  const isDirectVideoUrl = (url: string) => {
+    // Check if it's an S3 URL or other direct file URL
+    return (
+      url.includes("s3.") ||
+      url.endsWith(".mp4") ||
+      url.endsWith(".webm") ||
+      url.endsWith(".ogg") ||
+      url.endsWith(".mov")
+    );
+  };
+
+  const videoId = getYoutubeVideoId(currentLesson.content);
+  const isDirectVideo = isDirectVideoUrl(currentLesson.content);
+
   return (
-    <div className="relative mt-7 w-full h-[333px] bg-black rounded-[14px]">
-      <video
-        ref={videoRef}
-        className="w-full h-full object-cover"
-        src="https://res.cloudinary.com/dssvrf9oz/video/upload/v1635662987/pexels-pavel-danilyuk-5359634_1_gmixla.mp4"
-        muted
-      />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <button
-          onClick={togglePlayPause}
-          className="bg-[#CCCBCB] w-[70px] aspect-square rounded-full shadow-lg hover:bg-gray-200 flex items-center justify-center transition"
-        >
-          {isPlaying ? (
-            <div>
-              <div className="w-[50px] rounded-full aspect-square bg-white flex items-center justify-center">
-                <div>
-                  <img src={pause} alt="" />
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div className="w-[50px] rounded-full aspect-square bg-white flex items-center justify-center">
-                <div>
-                  <img src={play} alt="" />
-                </div>
-              </div>
-            </div>
-          )}
-        </button>
-      </div>
+    <div className="w-full aspect-video rounded-lg overflow-hidden">
+      {videoId ? (
+        // YouTube Embed
+        <iframe
+          width="100%"
+          height="100%"
+          src={`https://www.youtube.com/embed/${videoId}`}
+          title={currentLesson.lessonTitle}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      ) : isDirectVideo ? (
+        // Direct video file
+        <video width="100%" height="100%" controls className="w-full h-full">
+          <source src={currentLesson.content} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      ) : (
+        // Fallback for other types of links
+        <div className="w-full h-full flex flex-col items-center justify-center bg-gray-200 p-6">
+          <p className="mb-4 text-center">
+            Video content available at external link:
+          </p>
+          <a
+            href={currentLesson.content}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline px-4 py-2 bg-white rounded-md shadow"
+          >
+            Open video link
+          </a>
+        </div>
+      )}
     </div>
   );
 };

@@ -113,7 +113,7 @@ const TrainingTab1 = ({ handleTab }: BadgeTabProps) => {
                   {training.title}
                 </h1>
                 <p className="py-3 text-xs text-[#333333]">
-                  {training.description}
+                  {training.description.slice(0, 30)}
                 </p>
                 <div className="w-full rounded-[20px] bg-[#F0F2F5] h-[12px]">
                   <div

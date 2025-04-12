@@ -1,4 +1,5 @@
 import React from "react";
+import { useTabs } from "../utils/TabContext";
 
 interface TrainingProps {
   currentTraining: {
@@ -7,66 +8,78 @@ interface TrainingProps {
 }
 
 const TrainingDescription: React.FC<TrainingProps> = ({ currentTraining }) => {
+  const { currentLesson } = useTabs();
+
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <div className="text-sm text-[#1B1B1B99]">
         <h1 className="text-[24px] text-[#333333] font-semibold">
-          Training Description
+          {currentLesson ? currentLesson.lessonTitle : "Training Description"}
         </h1>
-        <p className="mt-7">
-          {/* This course delves into the techniques and tools used to analyze and
-          understand malicious software (malware) and how it operates. Designed
-          for cybersecurity professionals, this advanced-level course teaches
-          participants how to detect, analyze, and mitigate malware threats in
-          complex environments. Through hands-on labs and real-world case
-          studies, learners will gain the skills to perform static and dynamic
-          analysis, reverse engineer malware, and understand its behavior in
-          different operating environments. */}
-          {currentTraining.description}
-        </p>
+        <div className="mt-7">
+          {currentLesson ? (
+            <div>
+              <p className="mb-4">
+                <strong>Type:</strong>{" "}
+                {currentLesson.lessonType.charAt(0).toUpperCase() +
+                  currentLesson.lessonType.slice(1)}
+              </p>
 
-        {/* <p className="text-[#433E3F] pt-4">The course will cover: </p>
-        <ul className="list-disc px-7 pb-4">
-          <li>
-            Types of malware: viruses, trojans, worms, ransomware, and rootkits
-          </li>
-          <li>Malware analysis methodologies: static vs. dynamic analysis</li>
-          <li>Reverse engineering of malware binaries </li>
-          <li>Understanding obfuscation and packing techniques</li>
-          <li>
-            Analyzing malware with tools like IDA Pro, Ghidra, and OllyDbg
-          </li>
-          <li>Memory forensics and examining volatile data</li>
-          <li>
-            Behavioural analysis to detect indicators of compromise (IoCs)
-          </li>
-          <li>Creating detection signatures and YARA rules</li>
-        </ul> */}
+              {currentLesson.lessonType.toLowerCase() === "text" ? (
+                <div className="lesson-content">{currentLesson.content}</div>
+              ) : currentLesson.lessonType.toLowerCase() === "link" ||
+                currentLesson.lessonType.toLowerCase() === "video" ? (
+                <div>
+                  <p className="mb-4">This lesson contains video content.</p>
+                  <a
+                    href={currentLesson.content}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    View Video Content
+                  </a>
+                </div>
+              ) : (
+                <p>{currentLesson.content}</p>
+              )}
 
-        {/* <p>
-          By the end of the course, participants will be able to identify and
-          analyze complex malware samples, develop defense strategies, and
-          respond effectively to malware incidents in real-world scenarios.
-          Ideal for:
-        </p> */}
+              {currentLesson.questions &&
+                currentLesson.questions.length > 0 && (
+                  <p className="mt-4">
+                    This lesson includes an assessment with{" "}
+                    {currentLesson.questions.length} questions.
+                  </p>
+                )}
 
-        {/* <ul className="list-disc px-7">
-          <li>Malware analysts</li>
-          <li>Incident response teams</li>
-          <li>Security operations center (SOC) professionals</li>
-          <li>
-            Cybersecurity professionals interested in advancing their threat
-            detection skills
-          </li>
-        </ul> */}
-
-        {/* <p className="py-4">Course Duration: 16 hours</p>
-        <p className="text-[#433E3F]">Mode: Online/Blended</p>
-        <p>
-          Prerequisites: Basic knowledge of cybersecurity and programming,
-          familiarity with operating systems, and foundational understanding of
-          malware.
-        </p> */}
+              <div className="mt-6">
+                <p>
+                  <strong>Completion Status:</strong>{" "}
+                  {currentLesson.lessonProgress.completionStatus === "completed"
+                    ? "Completed"
+                    : currentLesson.lessonProgress.completionStatus ===
+                      "in-progress"
+                    ? "In Progress"
+                    : "Not Started"}
+                </p>
+                {currentLesson.lessonProgress.score > 0 && (
+                  <p className="mt-2">
+                    <strong>Score:</strong> {currentLesson.lessonProgress.score}
+                    %
+                  </p>
+                )}
+                {currentLesson.lessonProgress.attempts > 0 && (
+                  <p className="mt-2">
+                    <strong>Attempts:</strong>{" "}
+                    {currentLesson.lessonProgress.attempts}
+                  </p>
+                )}
+              </div>
+            </div>
+          ) : (
+            <p>{currentTraining.description}</p>
+          )}
+        </div>
       </div>
     </div>
   );

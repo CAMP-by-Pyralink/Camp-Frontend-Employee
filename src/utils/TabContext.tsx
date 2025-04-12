@@ -1,34 +1,53 @@
-// TabContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-// Define the shape of the context value
-interface TabContextType {
-  activeTab: number;
-  switchTab: (index: number) => void;
+// Define Lesson interface
+export interface Lesson {
+  _id: string;
+  lessonType: string;
+  lessonTitle: string;
+  content: string;
+  moduleId: string;
+  trainingId: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  questions?: any[];
+  lessonProgress: {
+    score: number;
+    completionStatus: string;
+    attempts: number;
+  };
 }
 
-// Create the context with a default value
+interface TabContextType {
+  activeTab: number;
+  switchTab: (tab: number) => void;
+  currentLesson: Lesson | null;
+  setCurrentLesson: (lesson: Lesson | null) => void;
+}
+
 const TabContext = createContext<TabContextType | undefined>(undefined);
 
-// Create a provider component
-export const TabProvider: React.FC<{ children: ReactNode }> = ({
+export const TabProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [activeTab, setActiveTab] = useState<number>(0); // Default to the first tab
+  const [activeTab, setActiveTab] = useState(0);
+  const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
 
-  const switchTab = (index: number) => {
-    setActiveTab(index);
+  const switchTab = (tab: number) => {
+    setActiveTab(tab);
   };
 
   return (
-    <TabContext.Provider value={{ activeTab, switchTab }}>
+    <TabContext.Provider
+      value={{ activeTab, switchTab, currentLesson, setCurrentLesson }}
+    >
       {children}
     </TabContext.Provider>
   );
 };
 
-// Create a custom hook for easier access to the context
-export const useTabs = (): TabContextType => {
+export const useTabs = () => {
   const context = useContext(TabContext);
   if (context === undefined) {
     throw new Error("useTabs must be used within a TabProvider");

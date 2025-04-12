@@ -45,7 +45,7 @@ export const useTrainingStore = create<TrainingStore>((set) => ({
   getAllTrainings: async (page: number) => {
     set({ isLoading: true });
     try {
-      const response: AxiosResponse = await api.post(
+      const response: AxiosResponse = await api.get(
         `/training/getUserAllAssignedTrainings?page=${page}`
       );
       console.log(response.data.trainings, "Trainning");
