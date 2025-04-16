@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_APP_BASE_URL,
+  baseURL: "https://pyralink-camp.vercel.app/api/v1",
   headers: {
     "Content-Type": "application/json",
   },
@@ -121,7 +121,7 @@ export const useUserStore = create<AdminStore>((set) => ({
       }
       return false;
     } catch (error: any) {
-      console.log("Update profile error:", error);
+      // console.log("Update profile error:", error);
       toast.error(error.response?.data?.msg || "Failed to update profile");
       return false;
     } finally {

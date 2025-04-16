@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TrainingTab1 from "./TrainingTab1";
 import BadgeTab from "./BadgeTab";
+import { useTrainingStore } from "../store/useTraining";
 
 const TrainingsTab = () => {
   const [activeTab, setActiveTab] = useState("1");
+
+  const { getAllTrainings, trainings, isLoading, getSingleTraining } =
+    useTrainingStore();
+
+  useEffect(() => {
+    getAllTrainings(1);
+  }, []);
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
@@ -29,7 +37,7 @@ const TrainingsTab = () => {
                   : "text-[#5A5555] bg-[#E4E7EC]"
               }`}
             >
-              2
+              {trainings.length}
             </span>
           </button>
           <button
@@ -48,7 +56,7 @@ const TrainingsTab = () => {
                   : "text-[#5A5555] bg-[#E4E7EC]"
               }`}
             >
-              2
+              0
             </span>
           </button>
         </div>

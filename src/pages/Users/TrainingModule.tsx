@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import TrainingDescription from "../../components/TrainingDescription";
 import TrainingModules from "../../components/TrainingModules";
@@ -9,9 +9,9 @@ import { useTrainingStore } from "../../store/useTraining";
 
 const TrainingModule = () => {
   const { activeTab, currentLesson } = useTabs();
-  const { currentTraining, isLoading } = useTrainingStore();
+  const { currentTraining, isLoading, getAllTrainings } = useTrainingStore();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading || !currentTraining) return <div>Loading...</div>;
 
   return (
     <div className="font-poppins relative">
@@ -40,7 +40,7 @@ const TrainingModule = () => {
                 {currentTraining?.title}
               </h1>
               <p className="font-medium mt-3">
-                {currentTraining.modules.length} modules
+                {currentTraining?.modules.length} modules
               </p>
               {/* <p className="text-sm">8 hours</p> */}
             </div>

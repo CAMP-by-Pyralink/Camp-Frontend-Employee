@@ -26,6 +26,11 @@ import { Toaster } from "react-hot-toast";
 import ResetPassword from "./_Auth/Admin/ResetPassword";
 import { useAuthStore } from "./store/useAuthStrore";
 import Cookies from "js-cookie";
+import React from "react";
+
+import whyDidYouRender from "@welldone-software/why-did-you-render";
+
+whyDidYouRender(React);
 
 function App() {
   const { setIsAuthenticated, isAuthenticated } = useAuthStore();

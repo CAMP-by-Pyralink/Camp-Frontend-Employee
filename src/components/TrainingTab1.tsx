@@ -15,52 +15,10 @@ const TrainingTab1 = ({ handleTab }: BadgeTabProps) => {
   const { getAllTrainings, trainings, isLoading, getSingleTraining } =
     useTrainingStore();
 
-  // const trainings = [
-  //   {
-  //     id: 1,
-  //     title: "Cybersecurity for Beginners",
-  //     description: "A score of at least 50% is needed to pass this training",
-  //     score: 0,
-  //     status: "Not Started",
-  //     progress: 0,
-  //     buttonLabel: "Start Training",
-  //     module: "cybersecurity",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Risk Assessment Training",
-  //     description: "A score of at least 50% is needed to pass this training",
-  //     score: 100,
-  //     status: "Completed",
-  //     progress: 100,
-  //     buttonLabel: "View Badge",
-  //     module: "risk-assessment",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Security Awareness",
-  //     description: "A score of at least 50% is needed to pass this training",
-  //     score: 45,
-  //     status: "Pending",
-  //     progress: 45,
-  //     buttonLabel: "Resume Training",
-  //     module: "security-awareness",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Phishing Training",
-  //     description: "A score of at least 50% is needed to pass this training",
-  //     score: 20,
-  //     status: "Completed",
-  //     progress: 100,
-  //     buttonLabel: "Retake Training",
-  //     module: "phishing",
-  //   },
-  // ];
-
   useEffect(() => {
     getAllTrainings(1);
   }, []);
+
   const handleButtonClick = (training: (typeof trainings)[0]) => {
     switch (training.buttonLabel) {
       case "Start Training":
