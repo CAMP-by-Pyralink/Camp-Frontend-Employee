@@ -37,16 +37,16 @@ interface TrainingModulesProps {
 }
 
 const TrainingModules = ({ currentTraining }: TrainingModulesProps) => {
+  const [openDropdowns, setOpenDropdowns] = useState<{
+    [key: string]: boolean;
+  }>({});
   const { switchTab, setCurrentLesson } = useTabs();
+
   const navigate = useNavigate();
 
   const startAssessment = (module: string, moduleType: string) => {
     navigate(`/training/start-assesment/${module}/${moduleType}`);
   };
-
-  const [openDropdowns, setOpenDropdowns] = useState<{
-    [key: string]: boolean;
-  }>({});
 
   const toggleDropdown = (moduleId: string) => {
     setOpenDropdowns((prev) => ({

@@ -95,8 +95,8 @@ export const useTrainingStore = create<TrainingStore>()(
             currentTraining: response.data.training || null,
           });
         } catch (error: any) {
-          console.log(error.response?.data?.msg || "Error fetching training");
-          toast.error(error.response?.data?.msg || "Failed to load training");
+          console.log(error.response?.data?.msg);
+          // toast.error(error.response?.data?.msg || "Failed to load training");
         } finally {
           set({ isLoading: false });
         }
