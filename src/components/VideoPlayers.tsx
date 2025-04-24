@@ -57,7 +57,7 @@ const VideoPlayer = () => {
 
   const handleVideoError = () => {
     setIsLoading(false);
-    setError("Failed to load video. Please try again later.");
+    // setError("Failed to load video. Please try again later.");
   };
 
   const videoId = getYoutubeVideoId(currentLesson.content);
