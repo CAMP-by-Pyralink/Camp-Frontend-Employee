@@ -2,7 +2,7 @@
 import { useUserStore } from "../src/store/useUserStore";
 
 (async () => {
-  console.time("⏱️ Fetch Trainings");
+  console.time("⏱️ Fetch Trainingss");
   await useUserStore.getState().getCurrentUser();
   console.timeEnd("⏱️ current users");
 
