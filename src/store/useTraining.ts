@@ -4,9 +4,9 @@ import axios, { AxiosResponse } from "axios";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
-// import { EncryptStorage } from "encrypt-storage";
+import { EncryptStorage } from "encrypt-storage";
 
-const { EncryptStorage } = await import("encrypt-storage");
+// const { EncryptStorage } = await import("encrypt-storage");
 
 const encryptStorage = new EncryptStorage("hotmony123456789", {
   storageType: "sessionStorage",
