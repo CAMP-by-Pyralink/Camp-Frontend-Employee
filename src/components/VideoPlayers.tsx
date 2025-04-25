@@ -195,7 +195,7 @@ const VideoPlayer = () => {
       </div>
 
       {/* Video controls and options */}
-      <div className="mt-4 flex flex-wrap items-center gap-4">
+      {/* <div className="mt-4 flex flex-wrap items-center gap-4">
         <button className="inline-flex items-center px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-md text-sm font-medium text-gray-700 transition-colors">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -249,7 +249,7 @@ const VideoPlayer = () => {
           </svg>
           Need Help
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

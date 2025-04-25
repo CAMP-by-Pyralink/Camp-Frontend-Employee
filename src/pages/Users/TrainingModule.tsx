@@ -146,10 +146,10 @@ const TrainingModule = () => {
                     {currentTraining?.modules.length} modules
                   </div>
                   {/* Estimated time could be calculated or fetched from API */}
-                  <div className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium ml-2">
+                  {/* <div className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium ml-2">
                     Est. {Math.ceil(currentTraining?.modules.length * 1.5)}{" "}
                     hours
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="w-full md:w-auto">
