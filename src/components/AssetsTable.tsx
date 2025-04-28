@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import pass from "../assets/passed.png";
 import fail from "../assets/failed.png";
+import { useAssetsStore } from "../store/useAssetsStore";
 
 interface Score {
   date: string;
@@ -69,6 +70,7 @@ const AssetsTable: React.FC = () => {
     },
   ];
 
+  const { getAllAssets, allAssets, isLoading } = useAssetsStore();
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   const handleButtonClick = (userId: string) => {
@@ -79,15 +81,17 @@ const AssetsTable: React.FC = () => {
     navigate(`/assets/${id}`);
   };
 
+  useEffect(() => {
+    getAllAssets();
+  }, []);
+
+  console.log(allAssets, "All Assets");
   return (
     <div className="relative min-h-[500px]">
       <div className="overflow-x-scroll custom-scrollbar w-full top-0 absolute  h-full pb-4">
         <table className="w-full min-w-[1300px] table-fixed border-collapse border border-gray-200 rounded-lg">
           <thead>
             <tr className="bg-[#F0F2F5] text-left text-[#344054]">
-              <th className="p-4 border-b text-center text-xs border-gray-200 font-normal">
-                ASSET ID
-              </th>
               <th className="p-4 border-b text-xs border-gray-200 font-normal">
                 ASSET NAME
               </th>
@@ -118,63 +122,63 @@ const AssetsTable: React.FC = () => {
             </tr>
           </thead>
           <tbody className="bg-white">
-            {users.map((user, index) => (
+            {allAssets.map((asset, index) => (
               <tr
                 key={index}
                 className="text-[#101928] hover:bg-gray-50 relative"
               >
+                {/* <td className="p-4 border-b text-[#475367] border-gray-200 text-xs">
+                  {asset._id}
+                </td> */}
                 <td className="p-4 border-b text-[#475367] border-gray-200 text-xs">
-                  {user.id}
-                </td>
-                <td className="p-4 border-b text-[#475367] border-gray-200 text-xs">
-                  {user.name}
+                  {asset.assetName}
                 </td>
                 <td className="p-4 text-[#475367] text-[12px] border-b border-gray-200">
-                  {user.category}
+                  {asset.category}
                 </td>
                 <td className="p-4 text-[#475367] text-[12px] border-b border-gray-200">
-                  {user.date}
+                  {new Date(asset.purchaseDate).toLocaleDateString()}
                 </td>
                 <td className="p-4 text-[#475367] text-[12px] border-b border-gray-200">
-                  {user.location}
+                  {asset.location}
                 </td>
                 <td className="p-4 text-[#475367] text-[12px] border-b border-gray-200">
                   <div
                     className={`rounded-[13px] py-[2.13px] px-[13px] w-fit text-[12px] ${
-                      user.status === "Active"
+                      asset.status === "Active"
                         ? " text-[#036B26] bg-[#E7F6EC] "
-                        : user.status === "Inactive"
+                        : asset.status === "Inactive"
                         ? "bg-[#FFECE5] text-[#AD3307]"
                         : " bg-[#F0F2F5] text-[#344054]"
                     } `}
                   >
-                    {user.status}
+                    {asset.status}
                   </div>
                 </td>
                 <td className="p-4 text-[#475367] text-[12px] border-b border-gray-200">
                   <div
                     className={`rounded-[13px] border py-[2px] px-[12px] w-fit text-[12px] ${
-                      user.antiStatus === "Up-to-date"
+                      asset.antivirusStatus === "Up-to-date"
                         ? " text-[#036B26] border-[#036B26] "
-                        : user.antiStatus === "N/A"
+                        : asset.antivirusStatus === "N/A"
                         ? "border-[#98A2B3] text-[#98A2B3]"
                         : " border-[#865503] text-[#865503]"
                     } `}
                   >
-                    {user.antiStatus}
+                    {asset.antivirusStatus}
                   </div>
                 </td>
                 <td className="p-4 text-[#475367] text-[12px] border-b border-gray-200">
-                  {user.warrantyDate}
+                  {new Date(asset.warrantyExpiration).toLocaleDateString()}
                 </td>
                 <td className="p-4 text-[#475367] text-[12px] border-b border-gray-200">
-                  {user.subRenew}
+                  {asset.subscriptionRenewal}
                 </td>
                 <td className="p-4 text-center text-[#475367] text-[12px] border-b border-gray-200">
                   <button
                     className="py-[5px] border border-[#04326B] px-[12px] w-fit text-[#04326B] text-xs"
                     onClick={() => {
-                      PageOpen(user.id);
+                      PageOpen(asset._id);
                     }}
                   >
                     View Details

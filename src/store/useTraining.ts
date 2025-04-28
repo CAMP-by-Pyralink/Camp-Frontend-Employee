@@ -59,6 +59,15 @@ interface TrainingStore {
   currentTraining: any | null;
   getAllTrainings: (page: number) => Promise<void>;
   getSingleTraining: (trainingId: any) => Promise<void>;
+  answerLessonQuestions: (answerData: {
+    trainingId: string;
+    moduleId: string;
+    lessonId: string;
+    answers: Array<{
+      questionId: string;
+      userAnswer: string | string[];
+    }>;
+  }) => Promise<boolean>;
 }
 
 export const useTrainingStore = create<TrainingStore>()(
@@ -81,6 +90,26 @@ export const useTrainingStore = create<TrainingStore>()(
           toast.error(error.response?.data?.msg || "Failed to load trainings");
         } finally {
           set({ isLoading: false });
+        }
+      },
+      answerLessonQuestions: async (answerData) => {
+        try {
+          const response: AxiosResponse = await api.post(
+            "/training/answerSingleLessonQuestions",
+            answerData
+          );
+
+          if (response.data.success) {
+            toast.success(response?.data?.msg);
+            return true;
+          } else {
+            toast.error(response.data.msg || "Failed to submit answers");
+            return false;
+          }
+        } catch (error: any) {
+          console.log(error.response?.data?.msg || "Error submitting answers");
+          toast.error(error.response?.data?.msg || "Failed to submit answers");
+          return false;
         }
       },
 
