@@ -21,10 +21,24 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+export interface Asset {
+  assetId: string;
+  assetName: string;
+  barCode: string;
+  assetType: string;
+  assetStatus: string;
+  assignedTo: string;
+  assignedDate: string;
+  location: string;
+  department: string;
+  currentLocation: string;
+  assetImage: string;
+}
 
 interface AssetStore {
   isLoading: boolean;
   allAssets: any[];
+  singleAsset: Asset | null;
   getAllAssets: () => Promise<any>;
   getAssetById: (id: string) => Promise<any>;
 }
@@ -32,16 +46,17 @@ interface AssetStore {
 export const useAssetsStore = create<AssetStore>((set) => ({
   isLoading: false,
   allAssets: [],
+  singleAsset: null,
   getAllAssets: async () => {
     set({ isLoading: true });
     try {
       const response = await api.get("asset/getUserAllAssignedAssets");
       console.log("Assets:", response.data);
       set({ allAssets: response.data.assets });
-      toast.success("Assets fetched successfully");
+      //   toast.success("Assets fetched successfully");
     } catch (error) {
       console.log("Error fetching assets:", error);
-      toast.error("Failed to fetch assets");
+      //   toast.error("Failed to fetch assets");
     } finally {
       set({ isLoading: false });
     }
@@ -50,11 +65,13 @@ export const useAssetsStore = create<AssetStore>((set) => ({
     set({ isLoading: true });
 
     try {
-      const response = await api.get(`/assets/${id}`);
+      // State to track the active tab
+      const response = await api.get(`/asset/getSingleUserAssignedAsset/${id}`);
       console.log("Asset:", response.data);
+      set({ singleAsset: response.data.asset });
     } catch (error) {
       console.error("Error fetching asset:", error);
-      toast.error("Failed to fetch asset");
+      // toast.error("Failed to fetch asset");
     } finally {
       set({ isLoading: false });
     }

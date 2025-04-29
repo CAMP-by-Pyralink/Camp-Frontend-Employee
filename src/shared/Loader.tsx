@@ -2,18 +2,8 @@ import { RotatingLines } from "react-loader-spinner";
 
 const Loader = () => {
   return (
-    <div>
-      <RotatingLines
-        visible={true}
-        // height="96"
-        width="96"
-        // color="#828282"
-        strokeWidth="1"
-        animationDuration="0.75"
-        ariaLabel="rotating-lines-loading"
-        // wrapperStyle={{}}
-        // wrapperClass=""
-      />
+    <div className="flex items-center justify-center h-64">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
     </div>
   );
 };

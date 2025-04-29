@@ -4,7 +4,8 @@ import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
 const api = axios.create({
-  baseURL: "https://pyralink-camp.vercel.app/api/v1",
+  baseURL: import.meta.env.VITE_APP_BASE_URL,
+
   headers: {
     "Content-Type": "application/json",
   },

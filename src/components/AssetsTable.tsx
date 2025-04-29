@@ -4,71 +4,8 @@ import pass from "../assets/passed.png";
 import fail from "../assets/failed.png";
 import { useAssetsStore } from "../store/useAssetsStore";
 
-interface Score {
-  date: string;
-  warrantyDate: string;
-  location: string;
-  browserStatus: string;
-  antiStatus: string;
-  status: string;
-  id: string;
-  name: string;
-  category: string;
-  subRenew: string;
-}
-
 const AssetsTable: React.FC = () => {
   const navigate = useNavigate();
-  const users: Score[] = [
-    {
-      warrantyDate: "11-08-2024",
-      id: "Py-MF-2131",
-      category: "Hardware",
-      date: "Apr 12, 2023",
-      antiStatus: "Up-to-date",
-      location: "Accounting",
-      name: "Laptop",
-      browserStatus: "Vulnerable",
-      status: "Active",
-      subRenew: "Monthly",
-    },
-    {
-      warrantyDate: "11-08-2024",
-      id: "Py-MF-2131",
-      category: "Hardware",
-      date: "Apr 12, 2023",
-      antiStatus: "Up-to-date",
-      location: "Accounting",
-      name: "Laptop",
-      browserStatus: "Vulnerable",
-      status: "Inactive",
-      subRenew: "Monthly",
-    },
-    {
-      warrantyDate: "11-08-2024",
-      id: "Py-MF-2131",
-      category: "Hardware",
-      date: "Apr 12, 2023",
-      antiStatus: "Overdue",
-      location: "Accounting",
-      name: "Laptop",
-      browserStatus: "Vulnerable",
-      status: "Repairs",
-      subRenew: "Monthly",
-    },
-    {
-      warrantyDate: "11-08-2024",
-      id: "Py-MF-2131",
-      category: "Hardware",
-      date: "Apr 12, 2023",
-      antiStatus: "N/A",
-      location: "Accounting",
-      name: "Laptop",
-      browserStatus: "Vulnerable",
-      status: "Reassigned",
-      subRenew: "N/A",
-    },
-  ];
 
   const { getAllAssets, allAssets, isLoading } = useAssetsStore();
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
@@ -189,7 +126,7 @@ const AssetsTable: React.FC = () => {
           </tbody>
         </table>
       </div>
-      <div className=" absolute bottom-4 w-full left-0 flex justify-between items-center mt-4">
+      {/* <div className=" absolute bottom-4 w-full left-0 flex justify-between items-center mt-4">
         <span className="text-sm text-[#070707]">Page 1 of 7</span>
         <div className="flex gap-2">
           <button className=" px-[14px] py-2 text-sm text-[#D0D5DD] border rounded-lg border-[#EAECF0] shadow-[0px_1px_2px_rgba(16,24,40,0.05)] bg-white">
@@ -199,7 +136,7 @@ const AssetsTable: React.FC = () => {
             Next
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

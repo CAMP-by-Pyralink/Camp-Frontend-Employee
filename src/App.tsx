@@ -29,6 +29,7 @@ import Cookies from "js-cookie";
 import React from "react";
 
 import whyDidYouRender from "@welldone-software/why-did-you-render";
+import Loader from "./shared/Loader";
 
 whyDidYouRender(React);
 
@@ -50,18 +51,20 @@ function App() {
 
   if (loading) {
     return (
-      <div className="loading-container">
-        <ClipLoader size={50} color="#123abc" />
-      </div>
+      // <div className="loading-container">
+      //   <ClipLoader size={50} color="#123abc" />
+      // </div>
+      <Loader />
     );
   }
   return (
     <>
       <Suspense
         fallback={
-          <div className="loading-container">
-            <ClipLoader size={50} color="#123abc" />
-          </div>
+          // <div className="loading-container">
+          //   <ClipLoader size={50} color="#123abc" />
+          // </div>
+          <Loader />
         }
       >
         <Routes>

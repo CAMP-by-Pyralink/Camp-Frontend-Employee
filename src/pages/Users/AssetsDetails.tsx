@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import laptop from "../../assets/lap.png";
 import code from "../../assets/code.png";
 import AssetsDetailsTab from "../../components/charts/AssetsDetailsTab";
+import { useAssetsStore } from "../../store/useAssetsStore";
+import Loader from "../../shared/Loader";
 
 const AssetsDetails = () => {
   const handleScrollTo = (section: string) => {
@@ -12,6 +14,13 @@ const AssetsDetails = () => {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const id = window.location.pathname.split("/").slice(-1)[0];
+  console.log(id, "id");
+
+  const { isLoading, singleAsset } = useAssetsStore();
+
+  if (!singleAsset) return <Loader />;
+
   return (
     <div className="font-poppins">
       <div className="flex items-center gap-4 font-poppins">
@@ -28,7 +37,7 @@ const AssetsDetails = () => {
 
       <div className="shadow-[5px_5px_40px_rgba(107,151,255,0.3)] w-full p-[20px] bg-white">
         <h1 className="text-[#333333] font-medium text-[24px]">
-          Asset Name: Dell XPS 13 Plus (Py-MF-2031)
+          {singleAsset?.assetName}
         </h1>
 
         <div className="py-[21px] px-[43px] bg-[#EBECFF] rounded-md ">
@@ -36,34 +45,39 @@ const AssetsDetails = () => {
             {/* laptop */}
             <div>
               <div>
-                <img src={laptop} alt="" />
+                <img
+                  src={singleAsset.assetImage || ""}
+                  alt=""
+                  className="w-[200px] h-[200px] object-cover"
+                />
               </div>
             </div>
 
             {/* text */}
             <h1 className="text-[#333333] font-medium text-[24px]">
-              Dell XPS 13 PLUS
+              {singleAsset?.assetName}
             </h1>
 
             {/* barcode */}
-            <div>
+            <div className="flex flex-col items-center gap-4">
               <div>
                 <img src={code} alt="" />
               </div>
+              <h1>{singleAsset.barCode}</h1>
             </div>
           </div>
 
-          <button
+          {/* <button
             className="text-white bg-[#282EFF] rounded px-3 py-[10px] text-sm font-medium mt-5"
             onClick={() => handleScrollTo("specification")}
           >
             View Specifications
-          </button>
+          </button> */}
         </div>
 
         {/* tabs */}
         <div className="">
-          <AssetsDetailsTab />
+          <AssetsDetailsTab id={id} />
         </div>
       </div>
     </div>
