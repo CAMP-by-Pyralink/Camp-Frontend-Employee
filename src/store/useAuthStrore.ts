@@ -7,15 +7,14 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
   headers: {
     "Content-Type": "application/json",
+    "x-api-key": import.meta.env.VITE_APP_API_KEY,
   },
 });
-
 /// Data Payload Interfaces
 export interface LoginUser {
   email: string;
   password: string;
 }
-
 export interface ForgotPassword {
   email: string;
 }
@@ -26,13 +25,11 @@ export interface VerifyEmailResetPassword {
 export interface ResendTokenAdmin {
   email: string;
 }
-
 export interface ChangePassword {
   email: string;
   newPassword: string;
   confirmPassword: string;
 }
-
 export interface UpdateProfile {
   fName: string;
   lName: string;
@@ -40,7 +37,6 @@ export interface UpdateProfile {
   phoneNumber: string;
   profilePicture: string;
 }
-
 interface AuthStore {
   authUser: AuthUser | null;
   isSigningIn: boolean;
@@ -54,11 +50,9 @@ interface AuthStore {
   changepassword: (data: ChangePassword) => Promise<any>;
   logout: () => Promise<void>;
 }
-
 export interface AuthUser {
   token: string;
 }
-
 export const useAuthStore = create<AuthStore>((set) => ({
   // initial state
   authUser: null,
@@ -68,7 +62,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
   //setters
   setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
   setAuthUser: (user: AuthUser | null) => set({ authUser: user }),
-
   login: async (data) => {
     set({ isSigningIn: true });
     try {
@@ -162,7 +155,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
       set({ isLoading: false });
     }
   },
-
   logout: async () => {
     set({ authUser: null, isAuthenticated: false });
     Cookies.remove("token");
