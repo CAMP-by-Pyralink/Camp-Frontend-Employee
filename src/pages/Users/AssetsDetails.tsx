@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import laptop from "../../assets/lap.png";
 import code from "../../assets/code.png";
@@ -16,8 +16,16 @@ const AssetsDetails = () => {
   };
   const id = window.location.pathname.split("/").slice(-1)[0];
   console.log(id, "id");
-  const { isLoading, singleAsset } = useAssetsStore();
+  const { isLoading, singleAsset, getAssetById } = useAssetsStore();
+  useEffect(() => {
+    const fetchAsset = async () => {
+      await getAssetById(id);
+    };
+    fetchAsset();
+  }, [getAssetById, id]);
+
   if (!singleAsset) return <Loader />;
+  console.log(singleAsset);
   return (
     <div className="font-poppins">
       <div className="flex items-center gap-4 font-poppins">
