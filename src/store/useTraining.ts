@@ -57,6 +57,7 @@ api.interceptors.response.use(
 interface TrainingStore {
   isLoading: boolean;
   trainings: any[];
+  answers: any[];
   currentTraining: any | null;
   getAllTrainings: (page: number) => Promise<void>;
   getSingleTraining: (trainingId: any) => Promise<void>;
@@ -70,6 +71,7 @@ interface TrainingStore {
     }>;
   }) => Promise<boolean>;
   markAsCompleted: (data: any) => Promise<any>;
+  getAnswers: (data: any) => Promise<any>;
 }
 
 export const useTrainingStore = create<TrainingStore>()(
@@ -78,6 +80,7 @@ export const useTrainingStore = create<TrainingStore>()(
       isLoading: false,
       trainings: [],
       currentTraining: null,
+      answers: [],
 
       getAllTrainings: async (page: number) => {
         set({ isLoading: true });
@@ -140,6 +143,31 @@ export const useTrainingStore = create<TrainingStore>()(
           console.log(error.response?.data?.message);
           toast.error(error.response?.data?.message);
           return false;
+        }
+      },
+      getAnswers: async (data: any) => {
+        set({ isLoading: true });
+        try {
+          const response = await api.post(
+            "/training/getUserAnsweredLessonQuestions",
+            data
+          );
+          if (response.data.success) {
+            set({ answers: response.data.data });
+            console.log(response.data.data);
+            toast.success(response?.data?.message);
+            return true;
+          } else {
+            toast.error(response.data.message || "Failed to submit answers");
+            return false;
+          }
+        } catch (error: any) {
+          console.log(
+            error.response?.data?.message || "Error submitting answers"
+          );
+          toast(error.response.message);
+        } finally {
+          set({ isLoading: false });
         }
       },
 

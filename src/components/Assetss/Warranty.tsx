@@ -11,13 +11,14 @@ const Warranty = ({ singleAsset }: any) => {
         <h1 className=" mb-4 text-textColor text-sm font-medium">
           Asset Warranty
         </h1>
-        <textarea
+        {/* <textarea
           // type="text"
           value={singleAsset?.warranty}
           readOnly
           disabled
           className=" w-[760px] h-[261px] border border-[#D0D5DD] outline-none rounded-md"
-        />
+        /> */}
+        <div>{singleAsset?.warranty}</div>
       </div>
     </div>
   );
