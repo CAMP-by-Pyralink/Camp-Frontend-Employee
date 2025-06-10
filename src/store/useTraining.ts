@@ -69,6 +69,7 @@ interface TrainingStore {
       userAnswer: string | string[];
     }>;
   }) => Promise<boolean>;
+  markAsCompleted: (data: any) => Promise<any>;
 }
 
 export const useTrainingStore = create<TrainingStore>()(
@@ -87,8 +88,12 @@ export const useTrainingStore = create<TrainingStore>()(
           console.log(response.data.trainings, "Trainings");
           set({ trainings: response.data.trainings || [] });
         } catch (error: any) {
-          console.log(error.response?.data?.msg || "Error fetching trainings");
-          toast.error(error.response?.data?.msg || "Failed to load trainings");
+          console.log(
+            error.response?.data?.message || "Error fetching trainings"
+          );
+          toast.error(
+            error.response?.data?.message || "Failed to load trainings"
+          );
         } finally {
           set({ isLoading: false });
         }
@@ -101,15 +106,39 @@ export const useTrainingStore = create<TrainingStore>()(
           );
 
           if (response.data.success) {
-            toast.success(response?.data?.msg);
+            toast.success(response?.data?.message);
             return true;
           } else {
-            toast.error(response.data.msg || "Failed to submit answers");
+            toast.error(response.data.message || "Failed to submit answers");
             return false;
           }
         } catch (error: any) {
-          console.log(error.response?.data?.msg || "Error submitting answers");
-          toast.error(error.response?.data?.msg || "Failed to submit answers");
+          console.log(
+            error.response?.data?.message || "Error submitting answers"
+          );
+          toast.error(
+            error.response?.data?.message || "Failed to submit answers"
+          );
+          return false;
+        }
+      },
+      markAsCompleted: async (data) => {
+        try {
+          const response: AxiosResponse = await api.post(
+            "/training/markLessonWithoutQuestionsCompleted",
+            data
+          );
+
+          if (response.data.success) {
+            toast.success(response?.data?.message);
+            return true;
+          } else {
+            toast.error(response.data.message);
+            return false;
+          }
+        } catch (error: any) {
+          console.log(error.response?.data?.message);
+          toast.error(error.response?.data?.message);
           return false;
         }
       },
@@ -125,8 +154,8 @@ export const useTrainingStore = create<TrainingStore>()(
             currentTraining: response.data.training || null,
           });
         } catch (error: any) {
-          console.log(error.response?.data?.msg);
-          // toast.error(error.response?.data?.msg || "Failed to load training");
+          console.log(error.response?.data?.message);
+          // toast.error(error.response?.data?.message || "Failed to load training");
         } finally {
           set({ isLoading: false });
         }

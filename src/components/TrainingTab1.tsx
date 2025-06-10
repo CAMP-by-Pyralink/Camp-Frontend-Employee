@@ -95,9 +95,10 @@ const TrainingTab1 = ({ handleTab }: BadgeTabProps) => {
             <div className="flex w-[40%] items-center justify-between gap-10">
               <div className="text-center w-full">
                 <p className="text-sm text-[#333333] mb-2">Your score:</p>
-                <span className=" text-textColor text-xl font-medium">
-                  {training.totalScore}%
+                <span className="text-textColor text-xl font-medium">
+                  {Math.round(training.totalScore)}%
                 </span>
+
                 <p
                   className={`${
                     training.status === "Pending" ||

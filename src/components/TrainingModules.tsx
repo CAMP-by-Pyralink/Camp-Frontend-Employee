@@ -8,6 +8,7 @@ import book from "../assets/book.png";
 import assess from "../assets/assess.png";
 import { useTabs, Lesson } from "../utils/TabContext";
 import { useNavigate } from "react-router-dom";
+import { Lock } from "lucide-react";
 
 interface Module {
   _id: string;
@@ -71,6 +72,21 @@ const TrainingModules = ({ currentTraining }: TrainingModulesProps) => {
     }
   };
 
+  const handleLessonClick = (
+    lesson: any,
+    index: number,
+    lessonIndex: number,
+    module: Module
+  ) => {
+    // Check if the lesson is locked (startTraining is false)
+    if (lesson.startTraining === false) {
+      return; // Don't execute anything if lesson is locked
+    }
+
+    switchTab(index * module.lessons.length + lessonIndex + 1);
+    setCurrentLesson(lesson);
+  };
+
   return (
     <div className="w-full px-[28px]">
       <div className="w-full">
@@ -116,18 +132,22 @@ const TrainingModules = ({ currentTraining }: TrainingModulesProps) => {
                 {module.lessons.map((lesson, lessonIndex) => (
                   <button
                     key={lesson._id}
-                    className="flex items-center gap-2"
-                    onClick={() => {
-                      switchTab(
-                        index * module.lessons.length + lessonIndex + 1
-                      ); // +1 because 0 is training description
-                      setCurrentLesson(lesson);
-                    }}
+                    className={`flex items-center gap-2 ${
+                      lesson.startTraining === false
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer hover:bg-gray-100"
+                    }`}
+                    onClick={() =>
+                      handleLessonClick(lesson, index, lessonIndex, module)
+                    }
+                    disabled={lesson.startTraining === false}
                   >
-                    <div>
+                    <div className="flex items-center gap-2">
+                      {/* Show lock icon if lesson is locked */}
                       <img src={getLessonIcon(lesson.lessonType)} alt="" />
                     </div>
                     <p className="text-xs">{lesson.lessonTitle}</p>
+                    {lesson.startTraining === false && <Lock size={10} />}
                   </button>
                 ))}
 

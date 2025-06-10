@@ -6,6 +6,7 @@ import { useTabs } from "../../utils/TabContext";
 import VideoPlayer from "../../components/VideoPlayers";
 import NotifyModal from "../../components/NotifyModal";
 import { useTrainingStore } from "../../store/useTraining";
+import Loader from "../../shared/Loader";
 
 // New components for different content types
 const PDFViewer = ({ pdfUrl }: any) => {
@@ -114,18 +115,28 @@ const Breadcrumb = ({ currentTraining }: BreadcrumbProps) => {
 
 const TrainingModule = () => {
   const { activeTab, currentLesson } = useTabs();
-  const { currentTraining, isLoading, getAllTrainings } = useTrainingStore();
+  const { currentTraining, isLoading, getAllTrainings, markAsCompleted } =
+    useTrainingStore();
 
   useEffect(() => {
     console.log("Current lesson:", currentLesson);
   }, [currentLesson]);
 
+  const submissionData: any = {
+    trainingId: currentLesson?.trainingId,
+    moduleId: currentLesson?.moduleId,
+    lessonId: currentLesson?._id,
+    // answers: formattedAnswers,
+  };
+
+  const handleCompleted = () => {
+    if (currentLesson) {
+      markAsCompleted(submissionData);
+    }
+  };
+
   if (isLoading || !currentTraining) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
@@ -175,7 +186,7 @@ const TrainingModule = () => {
 
         {/* Main content area */}
         <div className="flex flex-col lg:flex-row gap-8">
-          <div className="w-full  bg-white rounded-xl shadow-sm">
+          <div className="w-full basis-[70%]  bg-white rounded-xl shadow-sm">
             {activeTab === 0 ? (
               <TrainingDescription currentTraining={currentTraining} />
             ) : currentLesson ? (
@@ -267,12 +278,20 @@ const TrainingModule = () => {
             )}
           </div>
 
-          <div className="w-full ">
+          <div className="w-full basis-[30%] ">
             <div className="bg-white rounded-xl shadow-sm sticky top-6">
               <TrainingModules currentTraining={currentTraining} />
             </div>
           </div>
         </div>
+      </div>
+      <div
+        className=" w-full flex items-center justify-center"
+        onClick={handleCompleted}
+      >
+        <h1 className=" py-2 px-4  bg-primary600 text-white font-medium rounded-md">
+          Mark as completed
+        </h1>
       </div>
     </div>
   );
