@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 
 // Define Lesson interface
 export interface Lesson {
+  startTraining: boolean;
   description: any;
   _id: string;
   lessonType: string;
