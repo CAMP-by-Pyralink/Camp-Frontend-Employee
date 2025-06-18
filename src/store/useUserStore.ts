@@ -103,7 +103,7 @@ export const useUserStore = create<AdminStore>((set) => ({
       );
 
       if (response.status === 200) {
-        toast.success(response.data.msg);
+        toast.success(response.data.message);
 
         // Update the current user in the store with new data
         set((state) => ({
@@ -124,7 +124,7 @@ export const useUserStore = create<AdminStore>((set) => ({
       return false;
     } catch (error: any) {
       // console.log("Update profile error:", error);
-      toast.error(error.response?.data?.msg || "Failed to update profile");
+      toast.error(error.response?.data?.message || "Failed to update profile");
       return false;
     } finally {
       set({ isLoading: false });

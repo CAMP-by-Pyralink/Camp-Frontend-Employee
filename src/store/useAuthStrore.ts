@@ -72,13 +72,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
         Cookies.set("token", token, { expires: 1, secure: true });
         set({ authUser: { token }, isAuthenticated: true });
 
-        toast.success(response.data.msg);
+        toast.success(response.data.message);
         return true;
       }
       return false;
     } catch (error: any) {
       const message =
-        error?.response?.data?.msg || error.message || "Login failed";
+        error?.response?.data?.message || error.message || "Login failed";
       toast.error(message);
       return null;
     } finally {
@@ -90,15 +90,15 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       const response = await api.post("/user/forgotPassword", data);
       if (response.status === 200) {
-        toast.success(response.data.msg);
+        toast.success(response.data.message);
         sessionStorage.setItem("email", response.data.email);
         return true;
       }
       console.log(response.data);
       return false;
     } catch (error: any) {
-      // const message = error?.response?.data?.msg || "Login failed";
-      toast.error(error.response.data.msg);
+      // const message = error?.response?.data?.message || "Login failed";
+      toast.error(error.response.data.message);
       return false;
     } finally {
       set({ isLoading: false });
@@ -109,13 +109,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       const response = await api.post("/user/verifyEmailResetPassword", data);
       if (response.status === 200) {
-        toast.success(response.data.msg);
+        toast.success(response.data.message);
         return true;
       }
       console.log(response.data);
       return false;
     } catch (error: any) {
-      toast.error(error.response.data.msg);
+      toast.error(error.response.data.message);
       return false;
     } finally {
       set({ isLoading: false });
@@ -126,13 +126,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       const response = await api.post("/user/resendToken", data);
       if (response.status === 200) {
-        toast.success(response.data.msg);
+        toast.success(response.data.message);
         return true;
       }
       console.log(response.data);
       return false;
     } catch (error: any) {
-      toast.error(error.response.data.msg);
+      toast.error(error.response.data.message);
       return false;
     } finally {
       set({ isLoading: false });
@@ -143,13 +143,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       const response = await api.patch("/user/changePassword", data);
       if (response.status === 200) {
-        toast.success(response.data.msg);
+        toast.success(response.data.message);
         return true;
       }
       console.log(response.data);
       return false;
     } catch (error: any) {
-      toast.error(error.response.data.msg);
+      toast.error(error.response.data.message);
       return false;
     } finally {
       set({ isLoading: false });
