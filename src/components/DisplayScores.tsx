@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import check from "../assets/check-circle.png";
 import close from "../assets/svgs/close.svg";
 import { useTrainingStore } from "../store/useTraining";
 
-const DisplayScores = () => {
+const DisplayScores = ({ answers }: any) => {
   const navigate = useNavigate();
-  const { answers } = useTrainingStore();
-  console.log(answers[0].training);
-  const trainingId = answers[0].training;
+  // const { answers, getAnswers } = useTrainingStore();
+  console.log(answers[0]?.training);
+  const trainingId = answers[0]?.training;
+
+  // useEffect(() => {
+  //   getAnswers();
+  // });
 
   // Calculate score excluding input questions
   const scorableQuestions =
-    answers?.filter((answer) => answer.question.questionType !== "input") || [];
+    answers?.filter(
+      (answer: any) => answer.question.questionType !== "input"
+    ) || [];
 
   const correctAnswers = scorableQuestions.filter(
-    (answer) => answer.isCorrect
+    (answer: any) => answer.isCorrect
   ).length;
   const totalQuestions = scorableQuestions.length;
   const scorePercentage =
@@ -38,7 +44,7 @@ const DisplayScores = () => {
   };
 
   if (!answers || answers.length === 0) {
-    return null; // Don't render if no answers available
+    return null;
   }
 
   return (

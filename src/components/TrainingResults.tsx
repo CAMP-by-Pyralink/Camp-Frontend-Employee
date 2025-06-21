@@ -4,33 +4,33 @@ import check from "../assets/Iconv.png";
 import cross from "../assets/iconx.png";
 import { useTrainingStore } from "../store/useTraining";
 
-const TrainingResults = () => {
-  const { module: urlModule, moduleType: urlTraining } = useParams();
-  const { getAnswers, isLoading, answers, currentTraining } =
-    useTrainingStore();
+const TrainingResults = ({ answers, isLoading }: any) => {
+  // const { module: urlModule, moduleType: urlTraining } = useParams();
+  // const { getAnswers, isLoading, answers, currentTraining } =
+  //   useTrainingStore();
 
-  // Find the target module and lesson IDs
-  const targetModule = currentTraining?.modules?.find(
-    (mod: any) => mod.moduleTitle === urlTraining
-  );
+  // // Find the target module and lesson IDs
+  // const targetModule = currentTraining?.modules?.find(
+  //   (mod: any) => mod.moduleTitle === urlTraining
+  // );
 
-  const quizLesson = targetModule?.lessons?.find(
-    (lesson: any) =>
-      lesson.lessonType.toLowerCase() === "quiz" ||
-      (lesson.questions && lesson.questions.length > 0)
-  );
+  // const quizLesson = targetModule?.lessons?.find(
+  //   (lesson: any) =>
+  //     lesson.lessonType.toLowerCase() === "quiz" ||
+  //     (lesson.questions && lesson.questions.length > 0)
+  // );
 
-  useEffect(() => {
-    // Fetch answers when component mounts
-    if (currentTraining?._id && targetModule?._id && quizLesson?._id) {
-      const requestData = {
-        trainingId: currentTraining._id,
-        moduleId: targetModule._id,
-        lessonId: quizLesson._id,
-      };
-      getAnswers(requestData);
-    }
-  }, [currentTraining, targetModule, quizLesson, getAnswers]);
+  // useEffect(() => {
+  //   // Fetch answers when component mounts
+  //   if (currentTraining?._id && targetModule?._id && quizLesson?._id) {
+  //     const requestData = {
+  //       trainingId: currentTraining._id,
+  //       moduleId: targetModule._id,
+  //       lessonId: quizLesson._id,
+  //     };
+  //     getAnswers(requestData);
+  //   }
+  // }, [currentTraining, targetModule, quizLesson, getAnswers]);
 
   // Helper function to render different question types
   const renderQuestionOptions = (answerData: any) => {
@@ -130,13 +130,13 @@ const TrainingResults = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="p-4 flex justify-center items-center">
-        <p>Loading results...</p>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="p-4 flex justify-center items-center">
+  //       <p>Loading results...</p>
+  //     </div>
+  //   );
+  // }
 
   if (!answers || answers.length === 0) {
     return (
@@ -149,7 +149,7 @@ const TrainingResults = () => {
   return (
     <div className="p-4">
       {/* Questions and Answers */}
-      {answers.map((answerData, index) => {
+      {answers.map((answerData: any, index: any) => {
         // Skip input questions from display since they don't count toward score
         if (answerData.question.questionType === "input") {
           return (
